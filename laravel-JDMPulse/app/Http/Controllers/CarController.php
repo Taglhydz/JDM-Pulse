@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Car;
 use Illuminate\Http\Request;
+use App\Http\Requests\CarRequest;
+use App\Http\Resources\CarResource;
 
 class CarController extends Controller
 {
@@ -19,17 +21,9 @@ class CarController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CarRequest $request)
     {
-        $validatedData = $request->validate([
-            'brand' => 'required|string|max:255',   
-            'model' => 'required|string|max:255',
-            'year' => 'required|string|min:4|max:9',
-            'color' => 'required|string|max:50',
-            'generation' => 'nullable|string',
-            'image_url' => 'required|string|min:1',
-            'edition_id' => 'nullable|exists:editions,id',
-        ]);
+        $validatedData = $request->validated();
 
         $car = Car::create($validatedData);
 
@@ -41,28 +35,20 @@ class CarController extends Controller
      */
     public function show(string $id)
     {
-        $car = Car::with('edition')->findOrFail($id);
-        return response()->json($car);
+        $car = Car::findOrFail($id);
+        return new CarResource($car);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CarRequest $request, string $id)
     {
 
         $car = Car::findOrFail($id);
         
 
-        $validatedData = $request->validate([
-            'brand' => 'string|max:255',
-            'model' => 'string|max:255',
-            'year' => 'string|min:4|max:4',
-            'edition_id' => 'exists:editions,id',
-            'color' => 'string|max:50',
-            'generation' => 'string',
-            'image_url' => 'string',
-        ]);
+        $validatedData = $request->validated();
 
 
         $car->update($validatedData);

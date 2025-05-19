@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Engine;
 use Illuminate\Http\Request;
+use App\Http\Requests\EngineRequest;
+use App\Http\Resources\EngineResource;
 
 class EngineController extends Controller
 {
@@ -19,15 +21,9 @@ class EngineController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(EngineRequest $request)
     {
-        $validatedData = $request->validate([
-            'engine_name' => 'required|string|max:255',
-            'architecture' => 'required|string|max:255',
-            'volume' => 'required|numeric|min:0',
-            'induction' => 'required|string|max:255',
-            'fuel_type' => 'required|string|max:255',
-        ]);
+        $validatedData = $request->validated();
 
         $engine = Engine::create($validatedData);
 
@@ -40,22 +36,17 @@ class EngineController extends Controller
     public function show(string $id)
     {
         $engine = Engine::findOrFail($id);
-        return response()->json($engine);
+        return new EngineResource($engine);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(EngineRequest $request, string $id)
     {
         $engine = Engine::findOrFail($id);
 
-        $validatedData = $request->validate([
-            'engine_name' => 'string|max:255',
-            'architecture' => 'string|max:255',
-            'volume' => 'numeric|min:0',
-            'induction' => 'string|max:255',           'fuel_type' => 'string|max:255',
-        ]);
+        $validatedData = $request->validated();
 
         $engine->update($validatedData);
 

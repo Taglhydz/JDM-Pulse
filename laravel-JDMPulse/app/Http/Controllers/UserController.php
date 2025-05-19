@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Http\Requests\RegisterRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\UserResource;
 
 class UserController extends Controller
 {
@@ -37,13 +38,7 @@ class UserController extends Controller
     public function show(string $id)
     {
         $user = User::findOrFail($id);
-        return response()->json([
-            'id' => $user->id,
-            'first_name' => $user->first_name,
-            'last_name' => $user->last_name,
-            'date_of_birth' => $user->date_of_birth,
-            'email' => $user->email,
-        ]);
+        return new UserResource($user);
     }
 
     /**

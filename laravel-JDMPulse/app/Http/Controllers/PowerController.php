@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Power;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\PowerRequest;
+use App\Http\Resources\PowerResource;
 
 class PowerController extends Controller
 {
@@ -26,17 +27,8 @@ class PowerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PowerRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'car_id' => 'required|exists:cars,id',
-            'engine_id' => 'required|exists:engines,id',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], Response::HTTP_BAD_REQUEST);
-        }
-
         $power = Power::create($request->all());
         return response()->json($power, Response::HTTP_CREATED);
     }
@@ -55,7 +47,7 @@ class PowerController extends Controller
             return response()->json(['message' => 'Power not found'], Response::HTTP_NOT_FOUND);
         }
 
-        return response()->json($power, Response::HTTP_OK);
+        return new PowerResource($power);
     }
 
     /**
@@ -65,21 +57,12 @@ class PowerController extends Controller
      * @param  string  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, string $id)
+    public function update(PowerRequest $request, string $id)
     {
         $power = Power::find($id);
         
         if (!$power) {
             return response()->json(['message' => 'Power not found'], Response::HTTP_NOT_FOUND);
-        }
-
-        $validator = Validator::make($request->all(), [
-            'car_id' => 'exists:cars,id',
-            'engine_id' => 'exists:engines,id',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], Response::HTTP_BAD_REQUEST);
         }
 
         $power->update($request->all());

@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Own;
+use App\Http\Requests\OwnRequest;
+use App\Http\Resources\OwnResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Validator;
 
 class OwnController extends Controller
 {
@@ -30,16 +31,9 @@ class OwnController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(OwnRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'car_id' => 'required|exists:cars,id',
-            'user_id' => 'required|exists:users,id',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], Response::HTTP_BAD_REQUEST);
-        }
+        // La validation est déjà faite par OwnRequest
 
         $own = Own::create($request->all());
         return response()->json($own, Response::HTTP_CREATED);
@@ -59,7 +53,7 @@ class OwnController extends Controller
             return response()->json(['message' => 'Ownership record not found'], Response::HTTP_NOT_FOUND);
         }
 
-        return response()->json($own, Response::HTTP_OK);
+        return new OwnResource($own);
     }
 
     /**
@@ -69,21 +63,12 @@ class OwnController extends Controller
      * @param  string  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, string $id)
+    public function update(OwnRequest $request, string $id)
     {
         $own = Own::find($id);
         
         if (!$own) {
             return response()->json(['message' => 'Ownership record not found'], Response::HTTP_NOT_FOUND);
-        }
-
-        $validator = Validator::make($request->all(), [
-            'car_id' => 'exists:cars,id',
-            'user_id' => 'exists:users,id',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], Response::HTTP_BAD_REQUEST);
         }
 
         $own->update($request->all());

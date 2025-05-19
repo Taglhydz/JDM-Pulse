@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Motorization;
+use App\Http\Requests\MotorizationRequest;
+use App\Http\Resources\MotorizationResource;
 use Illuminate\Http\Request;
 
 class MotorizationController extends Controller
@@ -19,14 +21,9 @@ class MotorizationController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(MotorizationRequest $request)
     {
-        $validatedData = $request->validate([
-            'power' => 'required|numeric|min:0',
-            'torque' => 'required|numeric|min:0',
-            'consumption' => 'required|numeric|min:0',
-            'engine_id' => 'required|exists:engines,id',
-        ]);
+        $validatedData = $request->validated();
 
         $motorization = Motorization::create($validatedData);
 
@@ -39,22 +36,17 @@ class MotorizationController extends Controller
     public function show(string $id)
     {
         $motorization = Motorization::with('engine')->findOrFail($id);
-        return response()->json($motorization);
+        return new MotorizationResource($motorization);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(MotorizationRequest $request, string $id)
     {
         $motorization = Motorization::findOrFail($id);
 
-        $validatedData = $request->validate([
-            'power' => 'numeric|min:0',
-            'torque' => 'numeric|min:0',
-            'consumption' => 'numeric|min:0',
-            'engine_id' => 'exists:engines,id',
-        ]);
+        $validatedData = $request->validated();
 
         $motorization->update($validatedData);
 

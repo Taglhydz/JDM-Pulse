@@ -53,13 +53,15 @@ class AuthController extends Controller
 
         Log::info('Validated data:', $validated);
 
+        $role = isset($validated['role']) && !empty($validated['role']) ? $validated['role'] : 'user';
+
         try {
             $user = User::create([
                 'first_name' => $validated['first_name'],
                 'last_name' => $validated['last_name'],
                 'date_of_birth' => $validated['date_of_birth'],
                 'email' => $validated['email'],
-                'role' => 'user',
+                'role' => $role,
                 'password' => Hash::make($validated['password']),
             ]);
 

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Edition;
+use App\Http\Requests\EditionRequest;
+use App\Http\Resources\EditionResource;
 use Illuminate\Http\Request;
 
 class EditionController extends Controller
@@ -19,11 +21,9 @@ class EditionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(EditionRequest $request)
     {
-        $validatedData = $request->validate([
-            'edition_name' => 'required|string|max:255|unique:editions,edition_name',
-        ]);
+        $validatedData = $request->validated();
 
         $edition = Edition::create($validatedData);
 
@@ -36,19 +36,17 @@ class EditionController extends Controller
     public function show(string $id)
     {
         $edition = Edition::findOrFail($id);
-        return response()->json($edition);
+        return new EditionResource($edition);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(EditionRequest $request, string $id)
     {
         $edition = Edition::findOrFail($id);
 
-        $validatedData = $request->validate([
-            'edition_name' => 'string|max:255|unique:editions,edition_name,' . $id,
-        ]);
+        $validatedData = $request->validated();
 
         $edition->update($validatedData);
 

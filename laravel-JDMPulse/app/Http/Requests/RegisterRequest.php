@@ -27,8 +27,8 @@ class RegisterRequest extends FormRequest
             'last_name' => ['required', 'string', 'max:255'],
             'date_of_birth' => ['required', 'date'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'role' => ['string', Rule::in(['superAdmin', 'admin', 'user'])],
-            'password' => ['required', 'string', 'min:8'],
+            'role' => ['nullable', 'string', Rule::in(['superAdmin', 'admin', 'user'])],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
         ];
     }
 
@@ -49,9 +49,9 @@ class RegisterRequest extends FormRequest
             'email.required' => 'L\'adresse email est requise',
             'email.email' => 'L\'adresse email doit être valide',
             'email.unique' => 'Cette adresse email est déjà utilisée',
-            'role.required' => 'Le rôle est requis',
             'password.required' => 'Le mot de passe est requis',
             'password.min' => 'Le mot de passe doit contenir au moins 8 caractères',
+            'password.confirmed' => 'La confirmation du mot de passe ne correspond pas',
         ];
     }
 }
