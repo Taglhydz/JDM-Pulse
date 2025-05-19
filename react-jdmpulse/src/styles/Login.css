@@ -1,0 +1,119 @@
+@import url('./Base.css');
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - var(--header-height) - var(--footer-height));
+}
+
+.login-card {
+  background-color: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  width: 100%;
+  max-width: 450px;
+  overflow: hidden;
+  transition: var(--transition);
+}
+
+.login-card:hover {
+  box-shadow: var(--box-shadow-hover);
+}
+
+.login-header {
+  background-color: var(--primary);
+  color: var(--text-light);
+  padding: var(--padding-md); /* Padding réduit */
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.login-header h1 {
+  flex-grow: 1;
+  text-align: center;
+  margin-right: 2rem; /* Pour compenser l'espace du bouton à gauche */
+}
+
+.login-header .btn-back {
+  margin: 0;
+  background-color: transparent;
+  padding: 0.4rem;
+  min-width: 40px;
+}
+
+.login-header .btn-back:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.login-form {
+  padding: var(--padding-md); /* Padding réduit */
+}
+
+.form-group {
+  margin-bottom: 0.75rem; /* Marge réduite */
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.login-form input {
+  margin-bottom: 0.5rem; /* Marge réduite */
+  padding: 0.5rem 0.75rem; /* Input plus compact */
+}
+
+.error-message {
+  background-color: rgba(231, 76, 60, 0.1);
+  color: var(--error);
+  padding: 0.75rem;
+  border-radius: var(--border-radius);
+  margin-bottom: var(--padding-md);
+  font-size: 0.9rem;
+  border-left: 3px solid var(--error);
+}
+
+.login-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem; /* Espace réduit */
+  margin-top: var(--padding-md); /* Marge réduite */
+}
+
+.login-actions button {
+  width: 100%;
+}
+
+.login-actions button[type="button"] {
+  background-color: transparent;
+  border: 1px solid var(--primary);
+  color: var(--primary);
+}
+
+.login-actions button[type="button"]:hover {
+  background-color: rgba(0, 131, 143, 0.1);
+}
+
+.login-actions button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.forgot-password {
+  text-align: right;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+.forgot-password a {
+  color: var(--primary);
+}
+
+.forgot-password a:hover {
+  text-decoration: underline;
+}

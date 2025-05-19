@@ -1,0 +1,113 @@
+@import url('./Base.css');
+
+.register-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - var(--header-height) - var(--footer-height));
+  padding: var(--padding-md); /* Padding réduit */
+}
+
+.register-card {
+  background-color: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  width: 100%;
+  max-width: 450px;
+  overflow: hidden;
+  transition: var(--transition);
+}
+
+.register-card:hover {
+  box-shadow: var(--box-shadow-hover);
+}
+
+.register-header {
+  background-color: var(--primary);
+  color: var(--text-light);
+  padding: var(--padding-md);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.register-header h1 {
+  flex-grow: 1;
+  text-align: center;
+  margin-right: 2rem; /* Pour compenser l'espace du bouton à gauche */
+}
+
+.register-header .btn-back {
+  margin: 0;
+  background-color: transparent;
+  padding: 0.4rem;
+  min-width: 40px;
+}
+
+.register-header .btn-back:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.register-form {
+  padding: var(--padding-md); /* Padding réduit */
+}
+
+.form-row {
+  display: flex;
+  gap: var(--padding-md);
+  margin-bottom: 0.2rem; /* Marge réduite */
+}
+
+.form-group {
+  flex: 1;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.1rem; /* Marge réduite */
+  font-weight: 500;
+}
+
+.register-form input {
+  margin-bottom: 0.3rem; /* Marge réduite */
+  padding: 0.5rem 0.75rem; /* Input plus compact */
+}
+
+.register-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem; /* Espace réduit */
+  margin-top: var(--padding-md); /* Marge réduite */
+}
+
+.register-actions button {
+  width: 100%;
+}
+
+.register-actions button[type="button"] {
+  background-color: transparent;
+  border: 1px solid var(--primary);
+  color: var(--primary);
+}
+
+.register-actions button[type="button"]:hover {
+  background-color: rgba(0, 131, 143, 0.1);
+}
+
+.password-requirements {
+  font-size: 0.8rem;
+  color: #666;
+  margin-top: 0.25rem;
+}
+
+.term-condition {
+  display: flex;
+  align-items: flex-start;
+  margin-top: var(--padding-md);
+}
+
+.term-condition input {
+  margin-right: 0.5rem;
+  width: auto;
+}
