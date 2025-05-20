@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Own;
 use App\Http\Requests\OwnRequest;
 use App\Http\Resources\OwnResource;
+use App\Http\Resources\CarResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -91,5 +92,15 @@ class OwnController extends Controller
 
         $own->delete();
         return response()->json(null, Response::HTTP_NO_CONTENT);
+    }
+
+    /**
+     * Get all cars owned by a specific user
+     */
+    public function getCarsByUserId($userId)
+    {
+        $owns = Own::with('car')->where('user_id', $userId)->get();
+        $cars = $owns->pluck('car')->filter();
+        return CarResource::collection($cars);
     }
 }

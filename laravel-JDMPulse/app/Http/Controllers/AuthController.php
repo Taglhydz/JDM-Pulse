@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use App\Http\Resources\LoginResource;
+use App\Http\Resources\RegisterResource;
 
 class AuthController extends Controller
 {
@@ -24,18 +26,9 @@ class AuthController extends Controller
 
         $user = Auth::user();
         $token = $user->createToken('auth_token')->plainTextToken;
+        $user->access_token = $token;
 
-        return response()->json([
-            'user' => [
-                'id' => $user->id,
-                'first_name' => $user->first_name,
-                'last_name' => $user->last_name,
-                'date_of_birth' => $user->date_of_birth,
-                'email' => $user->email,
-            ],
-            'access_token' => $token,
-            'token_type' => 'Bearer'
-        ]);
+        return new LoginResource($user);
     }
 
     public function logout(Request $request)
@@ -67,10 +60,8 @@ class AuthController extends Controller
 
             Log::info('User created:', $user->toArray());
 
-            return response()->json([
-                'message' => 'User successfully registered',
-                'user' => $user,
-            ], 201);
+            return (new RegisterResource($user))
+                ->additional(['message' => 'User successfully registered']);
         } catch (\Exception $e) {
             Log::error('Error creating user:', ['error' => $e->getMessage()]);
             return response()->json([

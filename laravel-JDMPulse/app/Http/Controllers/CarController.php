@@ -6,6 +6,7 @@ use App\Models\Car;
 use Illuminate\Http\Request;
 use App\Http\Requests\CarRequest;
 use App\Http\Resources\CarResource;
+use App\Http\Resources\CarDetailsResource;
 
 class CarController extends Controller
 {
@@ -15,7 +16,7 @@ class CarController extends Controller
     public function index()
     {
         $cars = Car::all();
-        return response()->json($cars);
+        return CarResource::collection($cars);
     }
 
     /**
@@ -23,17 +24,14 @@ class CarController extends Controller
      */
     public function store(CarRequest $request)
     {
-        $validatedData = $request->validated();
-
-        $car = Car::create($validatedData);
-
-        return response()->json($car, 201);
+        $car = Car::create($request->validated());
+        return new CarResource($car);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
         $car = Car::findOrFail($id);
         return new CarResource($car);
@@ -42,18 +40,11 @@ class CarController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(CarRequest $request, string $id)
+    public function update(CarRequest $request, $id)
     {
-
         $car = Car::findOrFail($id);
-        
-
-        $validatedData = $request->validated();
-
-
-        $car->update($validatedData);
-
-        return response()->json($car);
+        $car->update($request->validated());
+        return new CarResource($car);
     }
 
     /**
@@ -70,13 +61,18 @@ class CarController extends Controller
     /**
      * Get cars with details
      */
-    public function getcarsWithDetails()
+    public function getDetailsByCarId($id)
     {
         try {
-            $cars = Car::with(['edition', 'powers.motorization.engine'])->get();
-            return response()->json($cars, 200);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Failed to load cars with details', 'message' => $e->getMessage()], 500);
+            $car = Car::with(['edition', 'powers.engine', 'powers.engine.motorizations'])->findOrFail($id);
+            return new CarDetailsResource($car);
+        } catch (\Throwable $e) {
+            \Log::error('Erreur getDetailsByCarId : ' . $e->getMessage());
+            return response()->json([
+                'error' => 'Erreur serveur',
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ], 500);
         }
     }
 }
