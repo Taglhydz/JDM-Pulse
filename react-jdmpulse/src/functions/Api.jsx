@@ -1,15 +1,19 @@
-async function Api(method, route, body, params, token) {
+async function Api(method, route, body, params, token, headers = {}) {
     const port = "8000"
 
+    let head = {
+        "Accept": "application/json",
+        "Content-Type": "application/json; charset=UTF-8",
+        ...headers
+    };
+    if (token && !head["Authorization"]) {
+        const bearer = sessionStorage.getItem("bearer");
+        head["Authorization"] = `Bearer ${bearer}`;
+    }
+
     if (method === "POST") {
-        let head = {
-            "Content-type": "application/json; charset=UTF-8",
-        };
-        if (token) {
-            const bearer = sessionStorage.getItem("bearer");
-            head["Authorization"] = `Bearer ${bearer}`;
-        }
         try {
+
             const response = await fetch(`http://127.0.0.1:${port}/api/${route}${params}`, {
                 method: "POST",
                 body: JSON.stringify(body),
@@ -26,16 +30,9 @@ async function Api(method, route, body, params, token) {
         } catch (error) {
             console.error("Une erreur est survenue : ", error);
         }
+        return;
     }
     if (method === "GET") {
-        let head = {
-            "Content-type": "application/json; charset=UTF-8",
-        };
-        if (token) {
-            const bearer = sessionStorage.getItem("bearer");
-            head["Authorization"] = `Bearer ${bearer}`;
-        }
-
         try {
             const response = await fetch(`http://localhost:${port}/api/${route}${params}`, {
                 method: "GET",
@@ -53,8 +50,8 @@ async function Api(method, route, body, params, token) {
             console.error("Une erreur est survenue:", error);
             return { status: error.status, message: error.message }; 
         }
-    } else {
-        throw new Error("Méthode non supportée");
+        return;
     }
+    throw new Error("Méthode non supportée");
 }
 export default Api

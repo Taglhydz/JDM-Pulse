@@ -31,28 +31,19 @@ function Login() {
 			const response = await Api("POST", "auth/login", {
 				email: formData.email,
 				password: formData.password
-			}, "", false);
+			}, "", false, {});
 
-			console.log("Réponse de l'API:", response); // Pour déboguer
-
-			if (response && response.status === 200) {
-				// Utilise access_token au lieu de token
-				if (response.body.access_token) {
-					// Stocke le token
-					sessionStorage.setItem("bearer", response.body.access_token);
-					
-					// Stocke également les informations de l'utilisateur si nécessaire
-					if (response.body.user) {
-						sessionStorage.setItem("user", JSON.stringify(response.body.user));
-					}
-					
-					navigate("/discover");
-				} else {
-					setError("Structure de réponse inattendue");
-					console.error("Réponse complète:", response.body);
-				}
+			if (response && response.status === 200 && response.body && response.body.data && response.body.data.access_token) {
+				// Stocke le token dans le sessionStorage
+				sessionStorage.setItem("bearer", response.body.data.access_token);
+				// Stocke également les informations de l'utilisateur si nécessaire
+				sessionStorage.setItem("user", JSON.stringify(response.body.data));
+				navigate("/discover");
+			} else if (response && response.body && response.body.message) {
+				setError(response.body.message);
 			} else {
-				setError("Email ou mot de passe incorrect.");
+				setError("Structure de réponse inattendue");
+				console.error("Réponse complète:", response.body);
 			}
 		} catch (error) {
 			setError("Une erreur est survenue lors de la connexion.");
