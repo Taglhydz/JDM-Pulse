@@ -18,7 +18,7 @@ class MotorizationResource extends JsonResource
             'id' => $this->id,
             'power' => $this->power,
             'torque' => $this->torque,
-            'engine' => $this->whenLoaded('engine', function () {
+            'engine_id' => $this->whenLoaded('engine', function () {
                 return [
                     'id' => $this->engine->id,
                     'engine_name' => $this->engine->engine_name,
