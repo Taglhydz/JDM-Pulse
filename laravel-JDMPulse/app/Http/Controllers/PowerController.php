@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Power;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use App\Http\Requests\PowerRequest;
+use Illuminate\Http\Request;
 use App\Http\Resources\PowerResource;
+use App\Http\Librairies\ApiResponse;
 
 class PowerController extends Controller
 {
@@ -18,7 +18,7 @@ class PowerController extends Controller
     public function index()
     {
         $powers = Power::with(['car', 'engine'])->get();
-        return response()->json($powers, Response::HTTP_OK);
+        return ApiResponse::success('Liste des puissances récupérée', PowerResource::collection($powers));
     }
 
     /**
@@ -30,7 +30,7 @@ class PowerController extends Controller
     public function store(PowerRequest $request)
     {
         $power = Power::create($request->all());
-        return response()->json($power, Response::HTTP_CREATED);
+        return ApiResponse::success('Puissance créée', new PowerResource($power), 201);
     }
 
     /**
@@ -42,12 +42,10 @@ class PowerController extends Controller
     public function show(string $id)
     {
         $power = Power::with(['car', 'engine'])->find($id);
-        
         if (!$power) {
-            return response()->json(['message' => 'Power not found'], Response::HTTP_NOT_FOUND);
+            return ApiResponse::error('Power not found', null, 404);
         }
-
-        return new PowerResource($power);
+        return ApiResponse::success('Détail de la puissance', new PowerResource($power));
     }
 
     /**
@@ -60,13 +58,11 @@ class PowerController extends Controller
     public function update(PowerRequest $request, string $id)
     {
         $power = Power::find($id);
-        
         if (!$power) {
-            return response()->json(['message' => 'Power not found'], Response::HTTP_NOT_FOUND);
+            return ApiResponse::error('Power not found', null, 404);
         }
-
         $power->update($request->all());
-        return response()->json($power, Response::HTTP_OK);
+        return ApiResponse::success('Puissance mise à jour', new PowerResource($power));
     }
 
     /**
@@ -78,12 +74,10 @@ class PowerController extends Controller
     public function destroy(string $id)
     {
         $power = Power::find($id);
-        
         if (!$power) {
-            return response()->json(['message' => 'Power not found'], Response::HTTP_NOT_FOUND);
+            return ApiResponse::error('Power not found', null, 404);
         }
-
         $power->delete();
-        return response()->json(null, Response::HTTP_NO_CONTENT);
+        return ApiResponse::success('Puissance supprimée', null, 204);
     }
 }

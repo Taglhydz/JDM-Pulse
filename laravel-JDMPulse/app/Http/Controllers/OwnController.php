@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Own;
 use App\Http\Requests\OwnRequest;
-use App\Http\Resources\OwnResource;
-use App\Http\Resources\CarResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Validation\ValidationException;
+use App\Http\Resources\OwnResource;
+use App\Http\Resources\CarResource;
+use App\Http\Librairies\ApiResponse;
 
 class OwnController extends Controller
 {
@@ -20,9 +22,9 @@ class OwnController extends Controller
     {
         try {
             $owns = Own::with(['car', 'user'])->get();
-            return response()->json($owns, Response::HTTP_OK);
+            return ApiResponse::success('Liste des possessions récupérée', OwnResource::collection($owns));
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Internal Server Error'], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return ApiResponse::error('Internal Server Error', $e->getMessage(), 500);
         }
     }
 
@@ -34,10 +36,14 @@ class OwnController extends Controller
      */
     public function store(OwnRequest $request)
     {
-        // La validation est déjà faite par OwnRequest
-
-        $own = Own::create($request->all());
-        return response()->json($own, Response::HTTP_CREATED);
+        try {
+            $own = Own::create($request->all());
+            return ApiResponse::success('Possession créée', new OwnResource($own), 201);
+        } catch (ValidationException $e) {
+            return ApiResponse::validationError($e->errors());
+        } catch (\Exception $e) {
+            return ApiResponse::error('Internal Server Error', $e->getMessage(), 500);
+        }
     }
 
     /**
@@ -49,12 +55,10 @@ class OwnController extends Controller
     public function show(string $id)
     {
         $own = Own::with(['car', 'user'])->find($id);
-        
         if (!$own) {
-            return response()->json(['message' => 'Ownership record not found'], Response::HTTP_NOT_FOUND);
+            return ApiResponse::error('Ownership record not found', null, 404);
         }
-
-        return new OwnResource($own);
+        return ApiResponse::success('Détail de la possession', new OwnResource($own));
     }
 
     /**
@@ -66,14 +70,18 @@ class OwnController extends Controller
      */
     public function update(OwnRequest $request, string $id)
     {
-        $own = Own::find($id);
-        
-        if (!$own) {
-            return response()->json(['message' => 'Ownership record not found'], Response::HTTP_NOT_FOUND);
+        try {
+            $own = Own::find($id);
+            if (!$own) {
+                return ApiResponse::error('Ownership record not found', null, 404);
+            }
+            $own->update($request->all());
+            return ApiResponse::success('Possession mise à jour', new OwnResource($own));
+        } catch (ValidationException $e) {
+            return ApiResponse::validationError($e->errors());
+        } catch (\Exception $e) {
+            return ApiResponse::error('Internal Server Error', $e->getMessage(), 500);
         }
-
-        $own->update($request->all());
-        return response()->json($own, Response::HTTP_OK);
     }
 
     /**
@@ -85,13 +93,11 @@ class OwnController extends Controller
     public function destroy(string $id)
     {
         $own = Own::find($id);
-        
         if (!$own) {
-            return response()->json(['message' => 'Ownership record not found'], Response::HTTP_NOT_FOUND);
+            return ApiResponse::error('Ownership record not found', null, 404);
         }
-
         $own->delete();
-        return response()->json(null, Response::HTTP_NO_CONTENT);
+        return ApiResponse::success('Possession supprimée', null, 204);
     }
 
     /**
@@ -101,6 +107,6 @@ class OwnController extends Controller
     {
         $owns = Own::with('car')->where('user_id', $userId)->get();
         $cars = $owns->pluck('car')->filter();
-        return CarResource::collection($cars);
+        return ApiResponse::success('Voitures de l\'utilisateur récupérées', CarResource::collection($cars));
     }
 }

@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Http\Requests\RegisterRequest;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\UserResource;
+use App\Http\Librairies\ApiResponse;
 
 class UserController extends Controller
 {
@@ -16,7 +18,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-        return response()->json($users);
+        return ApiResponse::success('Liste des utilisateurs récupérée', UserResource::collection($users));
     }
 
     /**
@@ -26,10 +28,8 @@ class UserController extends Controller
     {
         $validatedData = $request->validated();
         $validatedData['password'] = bcrypt($validatedData['password']);
-        
         $user = User::create($validatedData);
-
-        return response()->json($user, 201);
+        return ApiResponse::success('Utilisateur créé', new UserResource($user), 201);
     }
 
     /**
@@ -38,7 +38,7 @@ class UserController extends Controller
     public function show(string $id)
     {
         $user = User::findOrFail($id);
-        return new UserResource($user);
+        return ApiResponse::success('Détail de l\'utilisateur', new UserResource($user));
     }
 
     /**
@@ -46,24 +46,26 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $user = User::findOrFail($id);
-        
-        $validatedData = $request->validate([
-            'first_name' => 'string|max:255',
-            'last_name' => 'string|max:255',
-            'date_of_birth' => 'date',
-            'email' => 'string|email|max:255|unique:users,email,' . $id,
-            'role' => 'string|max:255',
-            'password' => 'string|min:8',
-        ]);
-
-        if (isset($validatedData['password'])) {
-            $validatedData['password'] = bcrypt($validatedData['password']);
+        try {
+            $user = User::findOrFail($id);
+            $validatedData = $request->validate([
+                'first_name' => 'string|max:255',
+                'last_name' => 'string|max:255',
+                'date_of_birth' => 'date',
+                'email' => 'string|email|max:255|unique:users,email,' . $id,
+                'role' => 'string|max:255',
+                'password' => 'string|min:8',
+            ]);
+            if (isset($validatedData['password'])) {
+                $validatedData['password'] = bcrypt($validatedData['password']);
+            }
+            $user->update($validatedData);
+            return ApiResponse::success('Utilisateur mis à jour', new UserResource($user));
+        } catch (ValidationException $e) {
+            return ApiResponse::validationError($e->errors());
+        } catch (\Exception $e) {
+            return ApiResponse::error('Internal Server Error', $e->getMessage(), 500);
         }
-
-        $user->update($validatedData);
-
-        return response()->json($user);
     }
 
     /**
@@ -71,16 +73,19 @@ class UserController extends Controller
      */
     public function updatePassword(Request $request, string $id)
     {
-        $user = User::findOrFail($id);
-        
-        $validatedData = $request->validate([
-            'password' => 'required|string|min:8',
-        ]);
-
-        $validatedData['password'] = bcrypt($validatedData['password']);
-        $user->update($validatedData);
-
-        return response()->json($user);
+        try {
+            $user = User::findOrFail($id);
+            $validatedData = $request->validate([
+                'password' => 'required|string|min:8',
+            ]);
+            $validatedData['password'] = bcrypt($validatedData['password']);
+            $user->update($validatedData);
+            return ApiResponse::success('Mot de passe mis à jour', new UserResource($user));
+        } catch (ValidationException $e) {
+            return ApiResponse::validationError($e->errors());
+        } catch (\Exception $e) {
+            return ApiResponse::error('Internal Server Error', $e->getMessage(), 500);
+        }
     }
 
     /**
@@ -90,7 +95,6 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $user->delete();
-        
-        return response()->json(null, 204);
+        return ApiResponse::success('Utilisateur supprimé', null, 204);
     }
 }

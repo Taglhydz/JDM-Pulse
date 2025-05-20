@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Edition;
 use App\Http\Requests\EditionRequest;
-use App\Http\Resources\EditionResource;
 use Illuminate\Http\Request;
+use App\Http\Resources\EditionResource;
+use App\Http\Librairies\ApiResponse;
 
 class EditionController extends Controller
 {
@@ -15,7 +16,7 @@ class EditionController extends Controller
     public function index()
     {
         $editions = Edition::all();
-        return response()->json($editions);
+        return ApiResponse::success('Liste des éditions récupérée', EditionResource::collection($editions));
     }
 
     /**
@@ -24,10 +25,8 @@ class EditionController extends Controller
     public function store(EditionRequest $request)
     {
         $validatedData = $request->validated();
-
         $edition = Edition::create($validatedData);
-
-        return response()->json($edition, 201);
+        return ApiResponse::success('Édition créée', new EditionResource($edition), 201);
     }
 
     /**
@@ -36,7 +35,7 @@ class EditionController extends Controller
     public function show(string $id)
     {
         $edition = Edition::findOrFail($id);
-        return new EditionResource($edition);
+        return ApiResponse::success('Détail de l\'édition', new EditionResource($edition));
     }
 
     /**
@@ -45,12 +44,9 @@ class EditionController extends Controller
     public function update(EditionRequest $request, string $id)
     {
         $edition = Edition::findOrFail($id);
-
         $validatedData = $request->validated();
-
         $edition->update($validatedData);
-
-        return response()->json($edition);
+        return ApiResponse::success('Édition mise à jour', new EditionResource($edition));
     }
 
     /**
@@ -60,7 +56,6 @@ class EditionController extends Controller
     {
         $edition = Edition::findOrFail($id);
         $edition->delete();
-        
-        return response()->json(null, 204);
+        return ApiResponse::success('Édition supprimée', null, 204);
     }
 }

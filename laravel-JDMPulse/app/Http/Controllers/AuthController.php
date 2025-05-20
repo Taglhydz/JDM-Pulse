@@ -9,8 +9,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
 use App\Http\Resources\LoginResource;
 use App\Http\Resources\RegisterResource;
+use App\Http\Librairies\ApiResponse;
 
 class AuthController extends Controller
 {
@@ -19,25 +21,21 @@ class AuthController extends Controller
         $credentials = $request->validated();
 
         if (!Auth::attempt($credentials)) {
-            return response()->json([
-                'message' => 'Ces identifiants ne correspondent à aucun utilisateur'
-            ], 401);
+            return ApiResponse::error('Ces identifiants ne correspondent à aucun utilisateur', null, 401);
         }
 
         $user = Auth::user();
         $token = $user->createToken('auth_token')->plainTextToken;
         $user->access_token = $token;
 
-        return new LoginResource($user);
+        return ApiResponse::success('Connexion réussie', new LoginResource($user));
     }
 
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
 
-        return response()->json([
-            'message' => 'Token supprimé'
-        ]);
+        return ApiResponse::success('Token supprimé');
     }
 
     public function register(RegisterRequest $request)
@@ -60,14 +58,12 @@ class AuthController extends Controller
 
             Log::info('User created:', $user->toArray());
 
-            return (new RegisterResource($user))
-                ->additional(['message' => 'User successfully registered']);
+            return ApiResponse::success('User successfully registered', new RegisterResource($user), 201);
+        } catch (ValidationException $e) {
+            return ApiResponse::validationError($e->errors());
         } catch (\Exception $e) {
             Log::error('Error creating user:', ['error' => $e->getMessage()]);
-            return response()->json([
-                'message' => 'Internal Server Error',
-                'error' => $e->getMessage()
-            ], 500);
+            return ApiResponse::error('Internal Server Error', $e->getMessage(), 500);
         }
     }
 }

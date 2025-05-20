@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Engine;
-use Illuminate\Http\Request;
 use App\Http\Requests\EngineRequest;
+use Illuminate\Http\Request;
 use App\Http\Resources\EngineResource;
+use App\Http\Librairies\ApiResponse;
 
 class EngineController extends Controller
 {
@@ -15,7 +16,7 @@ class EngineController extends Controller
     public function index()
     {
         $engines = Engine::all();
-        return response()->json($engines);
+        return ApiResponse::success('Liste des moteurs récupérée', EngineResource::collection($engines));
     }
 
     /**
@@ -24,10 +25,8 @@ class EngineController extends Controller
     public function store(EngineRequest $request)
     {
         $validatedData = $request->validated();
-
         $engine = Engine::create($validatedData);
-
-        return response()->json($engine, 201);
+        return ApiResponse::success('Moteur créé', new EngineResource($engine), 201);
     }
 
     /**
@@ -36,7 +35,7 @@ class EngineController extends Controller
     public function show(string $id)
     {
         $engine = Engine::findOrFail($id);
-        return new EngineResource($engine);
+        return ApiResponse::success('Détail du moteur', new EngineResource($engine));
     }
 
     /**
@@ -45,12 +44,9 @@ class EngineController extends Controller
     public function update(EngineRequest $request, string $id)
     {
         $engine = Engine::findOrFail($id);
-
         $validatedData = $request->validated();
-
         $engine->update($validatedData);
-
-        return response()->json($engine);
+        return ApiResponse::success('Moteur mis à jour', new EngineResource($engine));
     }
 
     /**
@@ -60,7 +56,6 @@ class EngineController extends Controller
     {
         $engine = Engine::findOrFail($id);
         $engine->delete();
-        
-        return response()->json(null, 204);
+        return ApiResponse::success('Moteur supprimé', null, 204);
     }
 }

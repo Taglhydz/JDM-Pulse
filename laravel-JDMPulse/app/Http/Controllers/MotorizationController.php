@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Motorization;
 use App\Http\Requests\MotorizationRequest;
-use App\Http\Resources\MotorizationResource;
 use Illuminate\Http\Request;
+use App\Http\Resources\MotorizationResource;
+use App\Http\Librairies\ApiResponse;
 
 class MotorizationController extends Controller
 {
@@ -15,7 +16,7 @@ class MotorizationController extends Controller
     public function index()
     {
         $motorizations = Motorization::all();
-        return response()->json($motorizations);
+        return ApiResponse::success('Liste des motorisations récupérée', MotorizationResource::collection($motorizations));
     }
 
     /**
@@ -24,10 +25,8 @@ class MotorizationController extends Controller
     public function store(MotorizationRequest $request)
     {
         $validatedData = $request->validated();
-
         $motorization = Motorization::create($validatedData);
-
-        return response()->json($motorization, 201);
+        return ApiResponse::success('Motorisation créée', new MotorizationResource($motorization), 201);
     }
 
     /**
@@ -36,7 +35,7 @@ class MotorizationController extends Controller
     public function show(string $id)
     {
         $motorization = Motorization::with('engine')->findOrFail($id);
-        return new MotorizationResource($motorization);
+        return ApiResponse::success('Détail de la motorisation', new MotorizationResource($motorization));
     }
 
     /**
@@ -45,12 +44,9 @@ class MotorizationController extends Controller
     public function update(MotorizationRequest $request, string $id)
     {
         $motorization = Motorization::findOrFail($id);
-
         $validatedData = $request->validated();
-
         $motorization->update($validatedData);
-
-        return response()->json($motorization);
+        return ApiResponse::success('Motorisation mise à jour', new MotorizationResource($motorization));
     }
 
     /**
@@ -60,7 +56,6 @@ class MotorizationController extends Controller
     {
         $motorization = Motorization::findOrFail($id);
         $motorization->delete();
-        
-        return response()->json(null, 204);
+        return ApiResponse::success('Motorisation supprimée', null, 204);
     }
 }

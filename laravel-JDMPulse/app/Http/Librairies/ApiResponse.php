@@ -97,4 +97,18 @@ class ApiResponse implements Responsable
     {
         return new self(false, $message, $data, $statusCode, $headers);
     }
+
+    /**
+     * Réponse d'erreur de validation
+     *
+     * @param mixed $errors
+     * @param string $message
+     * @param int $statusCode
+     * @param array $headers
+     * @return ApiResponse
+     */
+    public static function validationError($errors, string $message = 'Erreur de validation', int $statusCode = 422, array $headers = [])
+    {
+        return new self(false, $message, $errors, $statusCode, $headers);
+    }
 }

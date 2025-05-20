@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Car;
-use Illuminate\Http\Request;
 use App\Http\Requests\CarRequest;
+use Illuminate\Http\Request;
 use App\Http\Resources\CarResource;
 use App\Http\Resources\CarDetailsResource;
+use App\Http\Librairies\ApiResponse;
 
 class CarController extends Controller
 {
@@ -16,7 +17,7 @@ class CarController extends Controller
     public function index()
     {
         $cars = Car::all();
-        return CarResource::collection($cars);
+        return ApiResponse::success('Liste des voitures récupérée', CarResource::collection($cars));
     }
 
     /**
@@ -25,7 +26,7 @@ class CarController extends Controller
     public function store(CarRequest $request)
     {
         $car = Car::create($request->validated());
-        return new CarResource($car);
+        return ApiResponse::success('Voiture créée', new CarResource($car), 201);
     }
 
     /**
@@ -34,7 +35,7 @@ class CarController extends Controller
     public function show($id)
     {
         $car = Car::findOrFail($id);
-        return new CarResource($car);
+        return ApiResponse::success('Détail de la voiture', new CarResource($car));
     }
 
     /**
@@ -44,7 +45,7 @@ class CarController extends Controller
     {
         $car = Car::findOrFail($id);
         $car->update($request->validated());
-        return new CarResource($car);
+        return ApiResponse::success('Voiture mise à jour', new CarResource($car));
     }
 
     /**
@@ -54,8 +55,7 @@ class CarController extends Controller
     {
         $car = Car::findOrFail($id);
         $car->delete();
-        
-        return response()->json(null, 204);
+        return ApiResponse::success('Voiture supprimée', null, 204);
     }
 
     /**
@@ -65,14 +65,10 @@ class CarController extends Controller
     {
         try {
             $car = Car::with(['edition', 'powers.engine', 'powers.engine.motorizations'])->findOrFail($id);
-            return new CarDetailsResource($car);
-        } catch (\Throwable $e) {
-            \Log::error('Erreur getDetailsByCarId : ' . $e->getMessage());
-            return response()->json([
-                'error' => 'Erreur serveur',
-                'message' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
-            ], 500);
+            return ApiResponse::success('Détails de la voiture', new CarDetailsResource($car));
+        } catch (Throwable $e) {
+            Log::error('Erreur getDetailsByCarId : ' . $e->getMessage());
+            return ApiResponse::error('Erreur serveur', $e->getMessage(), 500);
         }
     }
 }
