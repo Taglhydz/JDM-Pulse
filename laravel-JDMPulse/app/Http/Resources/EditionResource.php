@@ -16,7 +16,7 @@ class EditionResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'edition_name' => $this->name,
+            'edition_name' => $this->edition_name,
         ];
     }
 }

@@ -29,7 +29,7 @@ class UserController extends Controller
         $validatedData = $request->validated();
         $validatedData['password'] = bcrypt($validatedData['password']);
         $user = User::create($validatedData);
-        return ApiResponse::success('Utilisateur créé', new UserResource($user), 201);
+        return ApiResponse::created('Utilisateur créé', new UserResource($user));
     }
 
     /**
@@ -37,7 +37,10 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        $user = User::findOrFail($id);
+        $user = User::find($id);
+        if (!$user) {
+            return ApiResponse::notFound('Utilisateur non trouvé');
+        }
         return ApiResponse::success('Détail de l\'utilisateur', new UserResource($user));
     }
 
@@ -93,8 +96,11 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        $user = User::findOrFail($id);
+        $user = User::find($id);
+        if (!$user) {
+            return ApiResponse::notFound('Utilisateur non trouvé');
+        }
         $user->delete();
-        return ApiResponse::success('Utilisateur supprimé', null, 204);
+        return ApiResponse::noContent('Utilisateur supprimé');
     }
 }

@@ -26,7 +26,7 @@ class EditionController extends Controller
     {
         $validatedData = $request->validated();
         $edition = Edition::create($validatedData);
-        return ApiResponse::success('Édition créée', new EditionResource($edition), 201);
+        return ApiResponse::created('Édition créée', new EditionResource($edition));
     }
 
     /**
@@ -34,7 +34,10 @@ class EditionController extends Controller
      */
     public function show(string $id)
     {
-        $edition = Edition::findOrFail($id);
+        $edition = Edition::find($id);
+        if (!$edition) {
+            return ApiResponse::notFound('Édition non trouvée');
+        }
         return ApiResponse::success('Détail de l\'édition', new EditionResource($edition));
     }
 
@@ -54,8 +57,11 @@ class EditionController extends Controller
      */
     public function destroy(string $id)
     {
-        $edition = Edition::findOrFail($id);
+        $edition = Edition::find($id);
+        if (!$edition) {
+            return ApiResponse::notFound('Édition non trouvée');
+        }
         $edition->delete();
-        return ApiResponse::success('Édition supprimée', null, 204);
+        return ApiResponse::noContent('Édition supprimée');
     }
 }

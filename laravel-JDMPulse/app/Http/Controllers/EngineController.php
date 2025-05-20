@@ -26,7 +26,7 @@ class EngineController extends Controller
     {
         $validatedData = $request->validated();
         $engine = Engine::create($validatedData);
-        return ApiResponse::success('Moteur créé', new EngineResource($engine), 201);
+        return ApiResponse::created('Moteur créé', new EngineResource($engine));
     }
 
     /**
@@ -34,7 +34,10 @@ class EngineController extends Controller
      */
     public function show(string $id)
     {
-        $engine = Engine::findOrFail($id);
+        $engine = Engine::find($id);
+        if (!$engine) {
+            return ApiResponse::notFound('Moteur non trouvé');
+        }
         return ApiResponse::success('Détail du moteur', new EngineResource($engine));
     }
 
@@ -54,8 +57,11 @@ class EngineController extends Controller
      */
     public function destroy(string $id)
     {
-        $engine = Engine::findOrFail($id);
+        $engine = Engine::find($id);
+        if (!$engine) {
+            return ApiResponse::notFound('Moteur non trouvé');
+        }
         $engine->delete();
-        return ApiResponse::success('Moteur supprimé', null, 204);
+        return ApiResponse::noContent('Moteur supprimé');
     }
 }

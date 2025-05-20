@@ -33,7 +33,7 @@ Route::middleware('throttle:60,1')->group(function () {
                 Route::get	 ('/all'			, [UserController::class, 'index'		  ]);
                 Route::post	 ('/create'			, [UserController::class, 'store'		  ]);
                 Route::get	 ('/{id}'			, [UserController::class, 'show'		  ]);
-                Route::put	 ('/update/{id}'	, [UserController::class, 'update'		  ]);
+                Route::post	 ('/update/{id}'	, [UserController::class, 'update'		  ]);
                 Route::delete('/delete/{id}'	, [UserController::class, 'destroy'		  ]);
                 Route::post	 ('/update-pwd/{id}', [UserController::class, 'updatePassword']);
             });
@@ -44,7 +44,7 @@ Route::middleware('throttle:60,1')->group(function () {
             Route::get	 ('/all'		, [CarController::class, 'index' 			 ]);		
             Route::get	 ('/{id}'		, [CarController::class, 'show'  			 ]);
             Route::post	 ('/create'		, [CarController::class, 'store'  			 ]);
-            Route::put	 ('/update/{id}', [CarController::class, 'update'			 ]);
+            Route::post	 ('/update/{id}', [CarController::class, 'update'			 ]);
             Route::delete('/delete/{id}', [CarController::class, 'destroy'			 ]);
             Route::get	 ('/detail/{id}', [CarController::class, 'getDetailsByCarId' ]);
             Route::get	 ('/user/{id}'  , [OwnController::class, 'getCarsByUserId'	 ]);
@@ -55,7 +55,7 @@ Route::middleware('throttle:60,1')->group(function () {
             Route::get   ('/all'		, [EditionController::class, 'index'  ]);
             Route::post  ('/create'		, [EditionController::class, 'store'  ]);
             Route::get   ('/{id}'		, [EditionController::class, 'show'   ]);
-            Route::put   ('/update/{id}', [EditionController::class, 'update' ]);
+            Route::post  ('/update/{id}', [EditionController::class, 'update' ]);
             Route::delete('/delete/{id}', [EditionController::class, 'destroy']);
         });
 
@@ -64,7 +64,7 @@ Route::middleware('throttle:60,1')->group(function () {
             Route::get   ('/all'		, [EngineController::class, 'index'  ]);
             Route::post  ('/create'		, [EngineController::class, 'store'  ]);
             Route::get   ('/{id}'		, [EngineController::class, 'show'   ]);
-            Route::put   ('/update/{id}', [EngineController::class, 'update' ]);
+            Route::post  ('/update/{id}', [EngineController::class, 'update' ]);
             Route::delete('/delete/{id}', [EngineController::class, 'destroy']);
         });
 
@@ -73,7 +73,7 @@ Route::middleware('throttle:60,1')->group(function () {
             Route::get   ('/all'		, [MotorizationController::class, 'index'  ]);
             Route::post  ('/create'		, [MotorizationController::class, 'store'  ]);
             Route::get   ('/{id}'		, [MotorizationController::class, 'show'   ]);
-            Route::put   ('/update/{id}', [MotorizationController::class, 'update' ]);
+            Route::post  ('/update/{id}', [MotorizationController::class, 'update' ]);
             Route::delete('/delete/{id}', [MotorizationController::class, 'destroy']);
         });
 
@@ -82,7 +82,7 @@ Route::middleware('throttle:60,1')->group(function () {
             Route::get   ('/all'		, [OwnController::class, 'index'  ]);
             Route::post  ('/create'		, [OwnController::class, 'store'  ]);
             Route::get   ('/{id}'		, [OwnController::class, 'show'   ]);
-            Route::put   ('/update/{id}', [OwnController::class, 'update' ]);
+            Route::post  ('/update/{id}', [OwnController::class, 'update' ]);
             Route::delete('/delete/{id}', [OwnController::class, 'destroy']);
         });
 
@@ -91,7 +91,7 @@ Route::middleware('throttle:60,1')->group(function () {
             Route::get   ('/all'		, [PowerController::class, 'index'  ]);
             Route::post  ('/create'		, [PowerController::class, 'store'  ]);
             Route::get   ('/{id}'		, [PowerController::class, 'show'   ]);
-            Route::put   ('/update/{id}', [PowerController::class, 'update' ]);
+            Route::post  ('/update/{id}', [PowerController::class, 'update' ]);
             Route::delete('/delete/{id}', [PowerController::class, 'destroy']);
         });
     });

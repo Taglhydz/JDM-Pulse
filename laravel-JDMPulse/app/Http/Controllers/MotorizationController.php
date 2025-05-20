@@ -26,7 +26,7 @@ class MotorizationController extends Controller
     {
         $validatedData = $request->validated();
         $motorization = Motorization::create($validatedData);
-        return ApiResponse::success('Motorisation créée', new MotorizationResource($motorization), 201);
+        return ApiResponse::created('Motorisation créée', new MotorizationResource($motorization));
     }
 
     /**
@@ -34,7 +34,10 @@ class MotorizationController extends Controller
      */
     public function show(string $id)
     {
-        $motorization = Motorization::with('engine')->findOrFail($id);
+        $motorization = Motorization::with('engine')->find($id);
+        if (!$motorization) {
+            return ApiResponse::notFound('Motorisation non trouvée');
+        }
         return ApiResponse::success('Détail de la motorisation', new MotorizationResource($motorization));
     }
 
@@ -54,8 +57,11 @@ class MotorizationController extends Controller
      */
     public function destroy(string $id)
     {
-        $motorization = Motorization::findOrFail($id);
+        $motorization = Motorization::find($id);
+        if (!$motorization) {
+            return ApiResponse::notFound('Motorisation non trouvée');
+        }
         $motorization->delete();
-        return ApiResponse::success('Motorisation supprimée', null, 204);
+        return ApiResponse::noContent('Motorisation supprimée');
     }
 }

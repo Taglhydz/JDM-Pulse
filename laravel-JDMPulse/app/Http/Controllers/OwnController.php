@@ -38,7 +38,7 @@ class OwnController extends Controller
     {
         try {
             $own = Own::create($request->all());
-            return ApiResponse::success('Possession créée', new OwnResource($own), 201);
+            return ApiResponse::created('Possession créée', new OwnResource($own));
         } catch (ValidationException $e) {
             return ApiResponse::validationError($e->errors());
         } catch (\Exception $e) {
@@ -56,7 +56,7 @@ class OwnController extends Controller
     {
         $own = Own::with(['car', 'user'])->find($id);
         if (!$own) {
-            return ApiResponse::error('Ownership record not found', null, 404);
+            return ApiResponse::notFound('Possession non trouvée');
         }
         return ApiResponse::success('Détail de la possession', new OwnResource($own));
     }
@@ -73,7 +73,7 @@ class OwnController extends Controller
         try {
             $own = Own::find($id);
             if (!$own) {
-                return ApiResponse::error('Ownership record not found', null, 404);
+                return ApiResponse::notFound('Possession non trouvée');
             }
             $own->update($request->all());
             return ApiResponse::success('Possession mise à jour', new OwnResource($own));
@@ -94,10 +94,10 @@ class OwnController extends Controller
     {
         $own = Own::find($id);
         if (!$own) {
-            return ApiResponse::error('Ownership record not found', null, 404);
+            return ApiResponse::notFound('Possession non trouvée');
         }
         $own->delete();
-        return ApiResponse::success('Possession supprimée', null, 204);
+        return ApiResponse::noContent('Possession supprimée');
     }
 
     /**

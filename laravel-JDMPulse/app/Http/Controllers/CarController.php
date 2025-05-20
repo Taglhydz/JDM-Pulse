@@ -26,7 +26,7 @@ class CarController extends Controller
     public function store(CarRequest $request)
     {
         $car = Car::create($request->validated());
-        return ApiResponse::success('Voiture créée', new CarResource($car), 201);
+        return ApiResponse::created('Voiture créée', new CarResource($car));
     }
 
     /**
@@ -34,7 +34,10 @@ class CarController extends Controller
      */
     public function show($id)
     {
-        $car = Car::findOrFail($id);
+        $car = Car::find($id);
+        if (!$car) {
+            return ApiResponse::notFound('Voiture non trouvée');
+        }
         return ApiResponse::success('Détail de la voiture', new CarResource($car));
     }
 
@@ -53,9 +56,12 @@ class CarController extends Controller
      */
     public function destroy(string $id)
     {
-        $car = Car::findOrFail($id);
+        $car = Car::find($id);
+        if (!$car) {
+            return ApiResponse::notFound('Voiture non trouvée');
+        }
         $car->delete();
-        return ApiResponse::success('Voiture supprimée', null, 204);
+        return ApiResponse::noContent('Voiture supprimée');
     }
 
     /**

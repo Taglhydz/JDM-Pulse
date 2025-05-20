@@ -30,7 +30,7 @@ class PowerController extends Controller
     public function store(PowerRequest $request)
     {
         $power = Power::create($request->all());
-        return ApiResponse::success('Puissance créée', new PowerResource($power), 201);
+        return ApiResponse::created('Puissance créée', new PowerResource($power));
     }
 
     /**
@@ -43,7 +43,7 @@ class PowerController extends Controller
     {
         $power = Power::with(['car', 'engine'])->find($id);
         if (!$power) {
-            return ApiResponse::error('Power not found', null, 404);
+            return ApiResponse::notFound('Puissance non trouvée');
         }
         return ApiResponse::success('Détail de la puissance', new PowerResource($power));
     }
@@ -59,7 +59,7 @@ class PowerController extends Controller
     {
         $power = Power::find($id);
         if (!$power) {
-            return ApiResponse::error('Power not found', null, 404);
+            return ApiResponse::notFound('Puissance non trouvée');
         }
         $power->update($request->all());
         return ApiResponse::success('Puissance mise à jour', new PowerResource($power));
@@ -75,9 +75,9 @@ class PowerController extends Controller
     {
         $power = Power::find($id);
         if (!$power) {
-            return ApiResponse::error('Power not found', null, 404);
+            return ApiResponse::notFound('Puissance non trouvée');
         }
         $power->delete();
-        return ApiResponse::success('Puissance supprimée', null, 204);
+        return ApiResponse::noContent('Puissance supprimée');
     }
 }

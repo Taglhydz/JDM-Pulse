@@ -101,14 +101,81 @@ class ApiResponse implements Responsable
     /**
      * Réponse d'erreur de validation
      *
-     * @param mixed $errors
      * @param string $message
+     * @param mixed $errors
      * @param int $statusCode
      * @param array $headers
      * @return ApiResponse
      */
-    public static function validationError($errors, string $message = 'Erreur de validation', int $statusCode = 422, array $headers = [])
+    public static function validationError(string $message = 'Erreur de validation', $errors, int $statusCode = 422, array $headers = [])
     {
         return new self(false, $message, $errors, $statusCode, $headers);
+    }
+
+    /**
+     * Réponse not found (404)
+     * 
+     * @param string $message
+     * @param mixed $data
+     * @param int $statusCode
+     * @param array $headers
+     * @return ApiResponse
+     */
+    public static function notFound($message = 'Ressource non trouvée', $data = null, $statusCode = 404, $headers = [])
+    {
+        return new self(false, $message, $data, $statusCode, $headers);
+    }
+
+    /**
+     * Réponse unauthorized (401)
+     * 
+     * @param string $message
+     * @param mixed $data
+     * @param int $statusCode
+     * @param array $headers
+     * @return ApiResponse
+     */
+    public static function unauthorized($message = 'Non autorisé', $data = null, $statusCode = 401, $headers = [])
+    {
+        return new self(false, $message, $data, $statusCode, $headers);
+    }
+
+    /**
+     * Réponse forbidden (403)
+     * 
+     * @param string $message
+     * @param mixed $data
+     * @param int $statusCode
+     * @param array $headers
+     * @return ApiResponse
+     */
+    public static function forbidden($message = 'Accès interdit', $data = null, $statusCode = 403, $headers = [])
+    {
+        return new self(false, $message, $data, $statusCode, $headers);
+    }
+
+    /**
+     * Réponse created (201)
+     * 
+     * @param string $message
+     * @param mixed $data
+     * @param array $headers
+     * @return ApiResponse
+     */
+    public static function created($message = 'Création réussie', $data = null, $headers = [])
+    {
+        return new self(true, $message, $data, 201, $headers);
+    }
+
+    /**
+     * Réponse no content (204)
+     * 
+     * @param string $message
+     * @param array $headers
+     * @return ApiResponse
+     */
+    public static function noContent($message = 'Aucun contenu', $headers = [])
+    {
+        return new self(true, $message, null, 204, $headers);
     }
 }

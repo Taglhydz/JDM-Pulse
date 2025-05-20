@@ -58,7 +58,7 @@ class AuthController extends Controller
 
             Log::info('User created:', $user->toArray());
 
-            return ApiResponse::success('User successfully registered', new RegisterResource($user), 201);
+            return ApiResponse::created('User successfully registered', new RegisterResource($user));
         } catch (ValidationException $e) {
             return ApiResponse::validationError($e->errors());
         } catch (\Exception $e) {
