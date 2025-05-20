@@ -13,11 +13,11 @@
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   padding: 16px;
   text-align: center;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: transform 0.3s, box-shadow 0.3s;
   cursor: pointer;
 }
 
 .car-card:hover {
-  transform: translateY(-8px);
+  transform: translateY(-7px);
   box-shadow: 0 8px 24px rgba(0,0,0,0.12);
 }
