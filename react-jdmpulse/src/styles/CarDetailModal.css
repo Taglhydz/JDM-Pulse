@@ -1,3 +1,5 @@
+@import url('./Base.css');
+
 .car-modal-overlay {
   position: fixed;
   top: 0;
@@ -17,9 +19,9 @@
   box-shadow: 0 8px 32px rgba(0,0,0,0.18);
   width: 40vw;
   min-width: 320px;
-  max-width: 600px;
-  height: 90vh;
-  max-height: 90vh;
+  max-width: 900px;
+  height: 95vh;
+  max-height: 95vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -60,4 +62,52 @@
 .car-modal p {
   margin: 6px 0;
   font-size: 1.1rem;
+}
+.car-engine-section {
+  width: 100%;
+  margin-top: 24px;
+  padding: 0 1rem;
+}
+.car-engine-title {
+  margin-bottom: 8px;
+}
+.car-engine-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #f8f8f8;
+  border-radius: 8px;
+  margin-top: 8px;
+}
+.car-engine-th {
+  padding: 8px;
+  border: 1px solid #ccc;
+  background: #e0e0e0;
+}
+.car-engine-td {
+  padding: 8px;
+  border: 1px solid #ccc;
+  vertical-align: middle;
+}
+.car-engine-td-title {
+  font-weight: bold;
+  color: #222;
+}
+.car-engine-td-empty {
+  color: #888;
+  text-align: center;
+}
+.car-engine-moto-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: none;
+}
+.car-engine-moto-td {
+  padding: 2px 8px;
+  border: none;
+}
+.car-modal-separator {
+  width: 40%;
+  margin: 18px auto 16px auto;
+  border: none;
+  border-top: 3px solid #e0e0e0;
 }

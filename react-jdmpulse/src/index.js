@@ -8,6 +8,7 @@ import Discover from './pages/Discover';
 import Connection from './pages/Connection';
 import Register from './pages/Register';
 import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
   {
     path: '/discover',
     element: <Discover/>,
+  },
+  {
+    path: '/dashboard',
+    element: <Dashboard/>,
   },
 ]);
 

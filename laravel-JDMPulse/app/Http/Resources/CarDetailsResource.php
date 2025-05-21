@@ -19,7 +19,7 @@ class CarDetailsResource extends JsonResource
             ],
             'edition' => $this->edition ? [
                 'id' => $this->edition->id,
-                'nom' => $this->edition->edition_name ?? null,
+                'edition_name' => $this->edition->edition_name ?? null,
             ] : null,
             'engines' => $this->powers->map(function($power) {
                 $engine = $power->engine;
@@ -35,6 +35,7 @@ class CarDetailsResource extends JsonResource
                             'id' => $moto->id,
                             'power' => $moto->power,
                             'torque' => $moto->torque,
+                            'consumption' => $moto->consumption,
                             'engine_id' => $moto->engine_id,
                         ];
                     }),

@@ -22,12 +22,10 @@ class CarResource extends JsonResource
             'color' => $this->color,
             'generation' => $this->generation,
             'image_url' => $this->image_url,
-            'edition' => $this->whenLoaded('edition', function () {
-                return [
-                    'id' => $this->edition->id,
-                    'name' => $this->edition->name,
-                ];
-            }),
+            'edition' => $this->edition ? [
+                'id' => $this->edition->id,
+                'edition_name' => $this->edition->edition_name ?? null,
+            ] : null,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

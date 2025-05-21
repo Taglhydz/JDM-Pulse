@@ -16,7 +16,7 @@ class CarController extends Controller
      */
     public function index()
     {
-        $cars = Car::all();
+        $cars = Car::with('edition')->get();
         return ApiResponse::success('Liste des voitures récupérée', CarResource::collection($cars));
     }
 

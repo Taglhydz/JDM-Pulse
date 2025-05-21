@@ -17,6 +17,7 @@ function Discover() {
 			.then(response => {
 				if (response && response.status === 200 && response.body && response.body.data) {
 					setCars(response.body.data);
+					console.log("Cars data:", response.body.data);
 				}
 			})
 			.catch(error => console.error(error));

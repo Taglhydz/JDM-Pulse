@@ -1,1 +1,107 @@
 @import url('./Base.css');
+
+.profile-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.profile-page h1 {
+  text-align: center;
+  margin: var(--padding-lg) 0;
+  color: var(--primary-dark);
+  font-size: 2rem;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.profile-page h1:after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 100px;
+  height: 3px;
+  background-color: var(--primary);
+  transform: translateX(-50%);
+}
+
+.profile-info, .profile-cars {
+  max-width: 800px;
+  margin: 0 auto var(--padding-lg);
+  padding: var(--padding-lg);
+  background-color: #fff;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  transition: var(--transition);
+}
+
+.profile-info:hover, .profile-cars:hover {
+  box-shadow: var(--box-shadow-hover);
+  transform: translateY(-3px);
+}
+
+.profile-info p {
+  margin-bottom: var(--padding-md);
+  padding-bottom: var(--padding-md);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: space-between;
+}
+
+.profile-info p:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.profile-info p strong {
+  color: var(--primary-dark);
+  font-weight: 600;
+}
+
+.profile-cars h2 {
+  color: var(--primary-dark);
+  margin-bottom: var(--padding-md);
+  font-size: 1.5rem;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--primary-light);
+}
+
+.profile-cars ul {
+  list-style: none;
+  padding: 0;
+}
+
+.profile-cars li {
+  padding: var(--padding-md);
+  margin-bottom: var(--padding-sm);
+  background-color: rgba(0, 131, 143, 0.05);
+  border-radius: var(--border-radius);
+  border-left: 3px solid var(--primary);
+  transition: var(--transition);
+}
+
+.profile-cars li:hover {
+  background-color: rgba(0, 131, 143, 0.1);
+  transform: translateX(5px);
+}
+
+/* Media queries pour responsivité */
+@media (max-width: 768px) {
+  .profile-info, .profile-cars {
+    padding: var(--padding-md);
+    margin: 0 var(--padding-md) var(--padding-md);
+  }
+  
+  .profile-page h1 {
+    margin: var(--padding-md) 0;
+    font-size: 1.8rem;
+  }
+  
+  .profile-info p {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+}
+

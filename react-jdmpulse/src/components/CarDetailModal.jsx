@@ -43,6 +43,7 @@ function CarDetailModal({ car, onClose }) {
         ) : (
           <React.Fragment>
             <img src={details.car.image_url || car.image_url} alt={`${details.car.brand} ${details.car.model}`} />
+            <hr className="car-modal-separator" />
             <h2>{details.car.brand} {details.car.model}</h2>
             <p><strong>Année :</strong> {details.car.year}</p>
             <p><strong>Génération :</strong> {details.car.generation}</p>
@@ -51,43 +52,51 @@ function CarDetailModal({ car, onClose }) {
               <p><strong>Edition :</strong> {details.edition.edition_name}</p>
             )}
             {details.engines && details.engines.length > 0 && (
-              <div style={{width: '100%', marginTop: 24}}>
-                <h3 style={{marginBottom: 8}}>Moteurs</h3>
-                <table style={{width: '100%', borderCollapse: 'collapse', background: '#f8f8f8', borderRadius: 8}}>
+              <div className="car-engine-section">
+                <h3 className="car-engine-title">Moteurs</h3>
+                <table className="car-engine-table">
                   <thead>
-                    <tr style={{background: '#e0e0e0'}}>
-                      <th style={{padding: '8px', border: '1px solid #ccc'}}>Nom moteur / Volume</th>
-                      <th style={{padding: '8px', border: '1px solid #ccc'}}>Induction</th>
-                      <th style={{padding: '8px', border: '1px solid #ccc'}}>Architecture</th>
-                      <th style={{padding: '8px', border: '1px solid #ccc'}}>Carburant</th>
-                      <th style={{padding: '8px', border: '1px solid #ccc'}}>Motorisations<br/>(Puissance / Couple)</th>
+                    <tr>
+                      <th className="car-engine-th">Nom moteur / Volume</th>
+                      <th className="car-engine-th">Admission</th>
+                      <th className="car-engine-th">Architecture</th>
+                      <th className="car-engine-th">Carburant</th>
+                      <th className="car-engine-th">Conso</th>
+                      <th className="car-engine-th">Puissance</th>
+                      <th className="car-engine-th">Couple</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {details.engines.map((engine, idx) => (
-                      <tr key={engine.id || idx}>
-                        <td style={{padding: '8px', border: '1px solid #ccc', fontWeight: 'bold'}}>{engine.engine_name} <span style={{color:'#888'}}>({engine.volume})</span></td>
-                        <td style={{padding: '8px', border: '1px solid #ccc'}}>{engine.induction}</td>
-                        <td style={{padding: '8px', border: '1px solid #ccc'}}>{engine.architecture}</td>
-                        <td style={{padding: '8px', border: '1px solid #ccc'}}>{engine.fuel_type}</td>
-                        <td style={{padding: '8px', border: '1px solid #ccc'}}>
-                          {engine.motorizations && engine.motorizations.length > 0 ? (
-                            <table style={{width:'100%', borderCollapse:'collapse', background:'none'}}>
-                              <tbody>
-                                {engine.motorizations.map((moto, mIdx) => (
-                                  <tr key={moto.id || mIdx}>
-                                    <td style={{padding: '2px 8px', border: 'none'}}>Puissance : <b>{moto.power}</b></td>
-                                    <td style={{padding: '2px 8px', border: 'none'}}>Couple : <b>{moto.torque}</b></td>
-                                  </tr>
-                                ))}
-                              </tbody>
-                            </table>
-                          ) : (
-                            <span style={{color:'#888'}}>Aucune motorisation</span>
+                    {details.engines.map((engine, idx) => {
+                      const motorizations = engine.motorizations || [];
+                      if (motorizations.length === 0) {
+                        return (
+                          <tr key={engine.id || idx}>
+                            <td className="car-engine-td car-engine-td-title">{engine.engine_name} <span style={{color:'#888'}}>({engine.volume})</span></td>
+                            <td className="car-engine-td">{engine.induction}</td>
+                            <td className="car-engine-td">{engine.architecture}</td>
+                            <td className="car-engine-td">{engine.fuel_type}</td>
+                            <td className="car-engine-td"></td>
+                            <td className="car-engine-td car-engine-td-empty" colSpan={2}>Aucune motorisation</td>
+                          </tr>
+                        );
+                      }
+                      return motorizations.map((moto, mIdx) => (
+                        <tr key={engine.id + '-' + mIdx}>
+                          {mIdx === 0 && (
+                            <>
+                              <td className="car-engine-td car-engine-td-title" rowSpan={motorizations.length}>{engine.engine_name} <span style={{color:'#888'}}>({engine.volume})</span></td>
+                              <td className="car-engine-td" rowSpan={motorizations.length}>{engine.induction}</td>
+                              <td className="car-engine-td" rowSpan={motorizations.length}>{engine.architecture}</td>
+                              <td className="car-engine-td" rowSpan={motorizations.length}>{engine.fuel_type}</td>
+                            </>
                           )}
-                        </td>
-                      </tr>
-                    ))}
+                          <td className="car-engine-td">{moto.consumption || ''}</td>
+                          <td className="car-engine-td">{moto.power}</td>
+                          <td className="car-engine-td">{moto.torque}</td>
+                        </tr>
+                      ));
+                    })}
                   </tbody>
                 </table>
               </div>

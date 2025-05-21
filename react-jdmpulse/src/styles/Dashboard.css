@@ -1,0 +1,69 @@
+@import url('./Base.css');
+
+.dashboard-grid {
+  display: grid;
+  gap: 32px;
+  margin: 40px auto 40px auto;
+  max-width: 1400px;
+  width: 100%;
+  align-items: flex-start;
+}
+.dashboard-grid-2 {
+  grid-template-columns: 1fr 1fr;
+}
+.dashboard-grid-3 {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+.dashboard-section {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  padding: 24px 20px 20px 20px;
+  margin-bottom: 1rem;
+  min-width: 0;
+}
+.dashboard-section h2 {
+  margin-top: 0;
+  margin-bottom: 18px;
+  font-size: 1.3rem;
+}
+.dashboard-actions {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.dashboard-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.dashboard-form input, .dashboard-form select {
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+.dashboard-form button[type="submit"] {
+  margin-top: 10px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 0;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+.dashboard-form button[type="submit"]:hover {
+  background: var(--primary-light);
+}
+@media (max-width: 1200px) {
+  .dashboard-grid-2, .dashboard-grid-3 {
+    grid-template-columns: 1fr;
+  }
+  .dashboard-grid {
+    max-width: 98vw;
+    margin: 24px auto;
+  }
+}

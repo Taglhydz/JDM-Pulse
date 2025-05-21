@@ -9,7 +9,7 @@ header {
   position: sticky;
   top: 0;
   z-index: 100;
-  padding: 0; /* Retire le padding */
+  padding: 0;
 }
 
 header h1 {
@@ -36,7 +36,7 @@ header h1 {
 #nav li a {
   color: var(--text-light);
   font-weight: 500;
-  padding: 0.5rem 1rem;
+  padding: 1.5rem 3rem;
   border-radius: var(--border-radius);
   transition: var(--transition);
 }
@@ -76,6 +76,50 @@ header:not(:has(#nav)) h1:after {
 
 header:not(:has(#nav)) h1:hover:after {
   transform: scaleX(1);
+}
+
+/* Style pour le bouton logout */
+.logout-btn {
+  position: absolute;
+  top: 18px;
+  right: 32px;
+  background: var(--primary-dark);
+  color: var(--text-light);
+  border: 1px solid var(--primary);
+  border-radius: 6px;
+  padding: 1rem 2rem;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+  z-index: 200;
+}
+
+.logout-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+/* Style pour le bouton dashboard */
+.dashboard-btn {
+  position: absolute;
+  top: 18px;
+  left: 32px;
+  background: var(--primary-dark);
+  color: var(--text-light);
+  border: 1px solid var(--primary);
+  border-radius: 6px;
+  padding: 1rem 2rem;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+  z-index: 200;
+}
+
+.dashboard-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
 }
 
 /* Media queries pour responsivité */

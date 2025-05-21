@@ -1,0 +1,122 @@
+.vamodal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+.vamodal {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  width: 70vw;
+  min-width: 320px;
+  max-width: 80vw;
+  max-height: 80vh;
+  padding: 32px 24px 24px 24px;
+  position: relative;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+.vamodal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  padding: 5px;
+  width: 40px;
+  height: 40px;
+  color: var(--text-color);
+  cursor: pointer;
+  line-height: 1;
+  z-index: 10;
+}
+.vamodal-close:hover {
+  color: var(--text-light);
+  background-color: var(--primary-light);
+  transform: none;
+}
+.vamodal-title {
+  margin: 0 0 18px 0;
+  text-align: center;
+}
+.vamodal-table-wrapper {
+  overflow-x: auto;
+}
+.vamodal-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #f8f8f8;
+  border-radius: 8px;
+}
+.vamodal-table th, .vamodal-table td {
+  padding: 8px;
+  border: 1px solid #ccc;
+  text-align: left;
+}
+.vamodal-table td:last-child {
+  border: none;
+  background: transparent;
+}
+.vamodal-table th {
+  background: #e0e0e0;
+}
+.vamodal-delete-btn {
+  background: none;
+  color: #e53935;
+  border: none;
+  border-radius: 6px;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+  margin-left: 4px;
+  outline: none;
+  font-weight: 500;
+}
+.vamodal-delete-btn:hover {
+  background: #ffeaea;
+  color: #b71c1c;
+}
+.vamodal-table td.image_url-col {
+  max-width: 350px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  word-break: break-word;
+  cursor: pointer;
+  color: #1a237e;
+  transition: background 0.2s;
+}
+.vamodal-table td.image_url-col.expanded {
+  white-space: normal;
+  word-break: break-all;
+  background: #f0f4ff;
+  max-width: 350px;
+  color: #222;
+}
+.vamodal-table th.image_url-col {
+  max-width: 350px;
+}
+.vamodal-action-col {
+  width: 1%;
+  min-width: 90px;
+  max-width: 180px;
+  text-align: right;
+}
+
+@media (max-width: 900px) {
+  .vamodal {
+    width: 95vw;
+    min-width: 0;
+    padding: 16px 4px 16px 4px;
+  }
+}

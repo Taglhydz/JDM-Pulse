@@ -30,27 +30,29 @@ function Profile() {
   if (!user) return <div>Chargement...</div>;
 
   return (
-    <div className="profile-page">
+    <div>
       <Header />
-      <h1>Profil</h1>
-      <div className="profile-info">
-        <p><strong>Nom :</strong> {user.last_name}</p>
-        <p><strong>Prénom :</strong> {user.first_name}</p>
-        <p><strong>Email :</strong> {user.email}</p>
-        <p><strong>Rôle :</strong> {user.role === 'admin' ? 'Administrateur' : user.role === 'super_admin' ? 'Super Administrateur' : user.role}</p>
-        <p><strong>Date de naissance :</strong> {user.date_of_birth}</p>
-      </div>
-      <div className="profile-cars">
-        <h2>Voitures possédées</h2>
-        {cars.length === 0 ? (
-          <p>Aucune voiture enregistrée.</p>
-        ) : (
-          <ul>
-            {cars.map(car => (
-              <li key={car.id}>{car.brand} {car.model} ({car.year})</li>
-            ))}
-          </ul>
-        )}
+      <div className="profile-page">
+        <h1>Profil</h1>
+        <div className="profile-info">
+          <p><strong>Nom :</strong> {user.last_name}</p>
+          <p><strong>Prénom :</strong> {user.first_name}</p>
+          <p><strong>Email :</strong> {user.email}</p>
+          <p><strong>Rôle :</strong> {user.role === 'admin' ? 'Administrateur' : user.role === 'super_admin' ? 'Super Administrateur' : user.role}</p>
+          <p><strong>Date de naissance :</strong> {user.date_of_birth}</p>
+        </div>
+        <div className="profile-cars">
+          <h2>Voitures possédées</h2>
+          {cars.length === 0 ? (
+            <p>Aucune voiture enregistrée.</p>
+          ) : (
+            <ul>
+              {cars.map(car => (
+                <li key={car.id}>{car.brand} {car.model} ({car.year})</li>
+              ))}
+            </ul>
+          )}
+        </div>
       </div>
       <Footer />
     </div>

@@ -14,12 +14,16 @@ class MotorizationResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        if (!$this->relationLoaded('engine')) {
+            $this->load('engine');
+        }
+        
         return [
             'id' => $this->id,
             'power' => $this->power,
             'torque' => $this->torque,
             'consumption' => $this->consumption,
-            'engine_id' => $this->whenLoaded('engine', function () {
+            'engine' => $this->when($this->engine, function () {
                 return [
                     'id' => $this->engine->id,
                     'engine_name' => $this->engine->engine_name,
