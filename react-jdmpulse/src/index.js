@@ -9,6 +9,8 @@ import Connection from './pages/Connection';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
+import Add from './pages/Add';
+import Liked from './pages/Liked';
 
 const router = createBrowserRouter([
   {
@@ -38,6 +40,14 @@ const router = createBrowserRouter([
   {
     path: '/dashboard',
     element: <Dashboard/>,
+  },
+  {
+    path: '/add',
+    element: <Add/>,
+  },
+  {
+    path: '/liked',
+    element: <Liked/>,
   },
 ]);
 

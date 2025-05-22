@@ -25,31 +25,35 @@ function Header() {
 	}
 
 	return (
-		<header>
-			{isAdmin && (
-				<button className="dashboard-btn" onClick={() => navigate('/dashboard')}>Dashboard</button>
-			)}
-			<ul id='nav'>
-				<li>
-					<Link to="/Profile">Profile</Link>
-				</li>
+		<>
+			<header>
+				{isAdmin && (
+					<button className="dashboard-btn" onClick={() => navigate('/dashboard')}>Dashboard</button>
+				)}
+				<ul id='nav'>
+					<li>
+						<Link to="/Profile">Profile</Link>
+					</li>
 
-				<li>
-					<Link to="/Discover">Discover</Link>
-				</li>
+					<li>
+						<Link to="/Discover">Discover</Link>
+					</li>
 
-				<li>
-					<h1>JDM - Pulse</h1>
-				</li>
-				<li>
-					<Link to="/Liked">Liked</Link>
-				</li>
-				<li>
-					<Link to="/Add">Add</Link>
-				</li>
-			</ul>
-			<button className="logout-btn" onClick={handleLogout}>Logout</button>
-		</header>
+					<li>
+						<h1>JDM - Pulse</h1>
+					</li>
+					<li>
+						<Link to="/Liked">Liked</Link>
+					</li>
+					<li>
+						<Link to="/Add">Add</Link>
+					</li>
+				</ul>
+				<button className="logout-btn" onClick={handleLogout}>Logout</button>
+			</header>
+			<div className="header-divider"></div>
+		</>
 	);
 }
+
 export default Header;

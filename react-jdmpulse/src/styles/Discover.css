@@ -1,10 +1,19 @@
 @import url('./Base.css');
 
+.discover-page h1 {
+  margin-left: 3rem;
+  margin-top: 1rem;
+  font-size: 2.2rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
 .cars-list {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
-  margin: 32px 0;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.5rem;
+  margin: 1rem 0;
+  padding: 0 1rem;
 }
 
 .car-card {
@@ -15,9 +24,72 @@
   text-align: center;
   transition: transform 0.3s, box-shadow 0.3s;
   cursor: pointer;
+  max-width: 350px;
+  margin: 0.7rem auto;
+  position: relative;
 }
 
 .car-card:hover {
   transform: translateY(-7px);
   box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+.loading, .error {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+}
+
+.error {
+  color: #e74c3c;
+}
+
+.like-button, .unlike-button {
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  margin-top: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.like-button:hover, .unlike-button:hover {
+  background-color: none !important;
+}
+
+.heart-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.heart-button:hover {
+  transform: scale(1.2);
+  background: transparent !important;
+}
+
+.heart-icon {
+  font-size: 30px;
+}
+
+.heart-icon.liked {
+  color: #ff3b5c;
+}
+
+@media (max-width: 768px) {
+  .cars-list {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
 }

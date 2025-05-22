@@ -87,12 +87,13 @@ class OwnController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  string  $id
+     * @param  string  $userId
+     * @param  string  $carId
      * @return \Illuminate\Http\Response
      */
-    public function destroy(string $id)
+    public function destroy(string $userId, string $carId)
     {
-        $own = Own::find($id);
+        $own = Own::where('user_id', $userId)->where('car_id', $carId)->first();
         if (!$own) {
             return ApiResponse::notFound('Possession non trouvée');
         }

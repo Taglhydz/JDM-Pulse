@@ -15,6 +15,7 @@ class PowerResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id' => $this->id,
             'car_id' => $this->car_id,
             'engine_id' => $this->engine_id,
             'car' => $this->whenLoaded('car', function () {

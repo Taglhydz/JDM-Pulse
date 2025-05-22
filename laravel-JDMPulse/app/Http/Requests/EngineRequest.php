@@ -17,7 +17,7 @@ class EngineRequest extends FormRequest
         return [
             'engine_name' => 'required|string|max:255',
             'architecture' => 'required|string|max:100',
-			'volume' => 'required|numeric|min:0|max:20000',
+			'volume' => 'required|string|max:100',
 			'induction' => 'required|string|max:100',
 			'fuel_type' => 'required|string|max:100',
         ];

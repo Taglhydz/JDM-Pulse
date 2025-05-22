@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../styles/ViewAllModal.css";
 
-function ViewAllModal({ open, onClose, title, data, columns, onDelete }) {
+function ViewAllModal({ open, onClose, title, data, columns, onDelete, onSelectForUpdate }) {
   const [expandedIdx, setExpandedIdx] = useState(null);
 
   console.log("ViewAllModal data", data);
@@ -19,7 +19,7 @@ function ViewAllModal({ open, onClose, title, data, columns, onDelete }) {
                 {columns.map(col => (
                   <th key={col} className={col === "image_url" ? "image_url-col" : undefined}>{col}</th>
                 ))}
-                <th className="vamodal-action-col"></th>
+                <th className="vamodal-action-col">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -47,9 +47,30 @@ function ViewAllModal({ open, onClose, title, data, columns, onDelete }) {
                       return <td key={col}>{row.engine.id}</td>;
                     }
                     return <td key={col}>{row[col]}</td>;
-                  })}
-                  <td className="vamodal-action-col">
-                    <button className="vamodal-delete-btn" onClick={() => onDelete && onDelete(row)} title="Supprimer">Supprimer</button>
+                  })}                  <td className="vamodal-action-col">
+                    <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                      {onSelectForUpdate && (
+                        <button 
+                          className="vamodal-update-btn" 
+                          onClick={() => {
+                            onSelectForUpdate(row);
+                            onClose();
+                          }}
+                          title="Modifier"
+                        >
+                          Modifier
+                        </button>
+                      )}
+                      {onDelete && (
+                        <button 
+                          className="vamodal-delete-btn" 
+                          onClick={() => onDelete(row)} 
+                          title="Supprimer"
+                        >
+                          Supprimer
+                        </button>
+                      )}
+                    </div>
                   </td>
                 </tr>
               )) : (

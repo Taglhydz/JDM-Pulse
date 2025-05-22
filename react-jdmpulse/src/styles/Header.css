@@ -122,6 +122,17 @@ header:not(:has(#nav)) h1:hover:after {
   color: #fff;
 }
 
+/* Style pour le trait sous le header */
+.header-divider {
+  width: 40vw;
+  max-width: 600px;
+  height: 3px !important;
+  min-height: 3px !important;
+  background: #d1d1d1;
+  margin: var(--padding-md) auto;
+  border-radius: 2px;
+}
+
 /* Media queries pour responsivité */
 @media (max-width: 768px) {
   #nav {

@@ -10,11 +10,12 @@ use App\Http\Controllers\MotorizationController;
 use App\Http\Controllers\OwnController;
 use App\Http\Controllers\PowerController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\LikeController;
 
 use App\Http\Middleware\CheckApiKey;
 use App\Http\Middleware\CheckRole;
 
-Route::middleware('throttle:60,1')->group(function () {
+Route::middleware('throttle:60,0.1')->group(function () {
     // Routes d'authentification
     Route::prefix('auth')->group(function () {
         Route::post('/login'		  , [AuthController::class, 'login'			]);
@@ -29,7 +30,7 @@ Route::middleware('throttle:60,1')->group(function () {
         
         Route::middleware('check.api.key')->group(function () {
             // Prefix pour User
-            Route::prefix('users')->middleware('check.role:admin')->group(function () {
+            Route::prefix('users')->group(function () {
                 Route::get	 ('/all'			, [UserController::class, 'index'		  ]);
                 Route::post	 ('/create'			, [UserController::class, 'store'		  ]);
                 Route::get	 ('/{id}'			, [UserController::class, 'show'		  ]);
@@ -79,11 +80,11 @@ Route::middleware('throttle:60,1')->group(function () {
 
         // Prefix pour Own
         Route::prefix('owns')->group(function () {
-            Route::get   ('/all'		, [OwnController::class, 'index'  ]);
-            Route::post  ('/create'		, [OwnController::class, 'store'  ]);
-            Route::get   ('/{id}'		, [OwnController::class, 'show'   ]);
-            Route::post  ('/update/{id}', [OwnController::class, 'update' ]);
-            Route::delete('/delete/{id}', [OwnController::class, 'destroy']);
+            Route::get   ('/all'		            , [OwnController::class, 'index'  ]);
+            Route::post  ('/create'		            , [OwnController::class, 'store'  ]);
+            Route::get   ('/{id}'		            , [OwnController::class, 'show'   ]);
+            Route::post  ('/update/{id}'            , [OwnController::class, 'update' ]);
+            Route::delete('/delete/{userId}/{carId}', [OwnController::class, 'destroy']);
         });
 
         // Prefix pour Power
@@ -94,5 +95,11 @@ Route::middleware('throttle:60,1')->group(function () {
             Route::post  ('/update/{id}', [PowerController::class, 'update' ]);
             Route::delete('/delete/{id}', [PowerController::class, 'destroy']);
         });
+
+        // Routes pour les like
+        Route::post('/like/{carId}',               [LikeController::class, 'like'            ]);
+        Route::post('/unlike/{carId}',             [LikeController::class, 'unlike'          ]);
+        Route::get('/likes-by-car',                [LikeController::class, 'getLikesByCar'   ]);
+        Route::get('/likes-by-cars-user/{userId}', [LikeController::class, 'getLikesByUserId']);
     });
 });

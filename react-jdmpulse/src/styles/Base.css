@@ -20,8 +20,8 @@
   
   /* Dimensions et espacements */
   --container-width: 1200px;
-  --header-height: 100px; /* Réduit la hauteur du header */
-  --footer-height: 95px; /* Réduit la hauteur du footer */
+  --header-height: 100px;
+  --footer-height: 95px;
   --border-radius: 8px;
   --padding-sm: 0.5rem;
   --padding-md: 1rem;
@@ -61,7 +61,7 @@ body {
   display: flex;
   flex-direction: column;
   flex: 1;
-  min-height: 100vh;
+  min-height: 80vh;
 }
 
 a {

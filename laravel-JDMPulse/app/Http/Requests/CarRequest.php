@@ -21,6 +21,7 @@ class CarRequest extends FormRequest
 			'color' => 'required|string|max:50',
 			'generation' => 'nullable|string|max:255',
 			'image_url' => 'nullable|string|min:1',
+            'edition_id' => 'nullable|integer|exists:editions,id',
         ];
     }
 

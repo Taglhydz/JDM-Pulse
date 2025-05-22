@@ -58,24 +58,31 @@
   border-radius: 8px;
 }
 .vamodal-table th, .vamodal-table td {
-  padding: 8px;
-  border: 1px solid #ccc;
+  padding: 12px 8px;
+  border: none;
   text-align: left;
 }
+.vamodal-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+.vamodal-table tr:nth-child(odd) {
+  background-color: #ffffff;
+}
 .vamodal-table td:last-child {
-  border: none;
   background: transparent;
 }
 .vamodal-table th {
   background: #e0e0e0;
+  border-bottom: 2px solid #ccc;
 }
 .vamodal-delete-btn {
-  background: none;
-  color: #e53935;
+  background: #e74e4e;
+  color: #fff;
   border: none;
   border-radius: 6px;
-  padding: 0.8rem 1.5rem;
+  padding: 0.8rem 0;
   font-size: 1rem;
+  width: 120px;
   cursor: pointer;
   transition: background 0.2s, color 0.2s, transform 0.2s;
   margin-left: 4px;
@@ -83,8 +90,7 @@
   font-weight: 500;
 }
 .vamodal-delete-btn:hover {
-  background: #ffeaea;
-  color: #b71c1c;
+  background: #aa1818;
 }
 .vamodal-table td.image_url-col {
   max-width: 350px;
@@ -109,8 +115,43 @@
 .vamodal-action-col {
   width: 1%;
   min-width: 90px;
-  max-width: 180px;
+  max-width: 280px;
   text-align: right;
+}
+.vamodal-update-btn {
+  background: var(--primary-light);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0.8rem 0.5rem;
+  font-size: 1rem;
+  width: 120px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+  margin-right: 4px;
+  outline: none;
+  font-weight: 500;
+}
+.vamodal-update-btn:hover {
+  background: var(--primary);
+  transform: translateY(-2px);
+}
+.vamodal-delete-btn {
+  background: #e74e4e;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.8rem;
+  font-size: 1rem;
+  width: 120px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+  margin-left: 4px;
+  outline: none;
+  font-weight: 500;
+}
+.vamodal-delete-btn:hover {
+  background: #aa1818;
 }
 
 @media (max-width: 900px) {

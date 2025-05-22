@@ -32,6 +32,30 @@
   gap: 12px;
   margin-bottom: 18px;
 }
+.dashboard-actions button {
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  background: var(--primary-light);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.dashboard-actions button:hover {
+  background: var(--primary-light);
+}
+.dashboard-actions button.active {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+  font-weight: 500;
+}
+.dashboard-actions button.active:hover {
+  background: var(--primary);
+}
 .dashboard-form {
   display: flex;
   flex-direction: column;

@@ -15,6 +15,7 @@ class OwnResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id' => $this->id,
             'car_id' => $this->car_id,
             'user_id' => $this->user_id,
             'car' => $this->whenLoaded('car', function () {

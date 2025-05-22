@@ -87,6 +87,55 @@
   transform: translateX(5px);
 }
 
+/* Agrandissement des cartes uniquement dans la section profile-cars */
+.profile-cars .car-card {
+  max-width: 350px;
+  min-width: 260px;
+  width: 100%;
+  padding: 20px;
+  position: relative;
+}
+
+.profile-cars .car-card img {
+  width: 100%;
+  max-width: 320px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+/* Style pour le bouton de suppression */
+.delete-car-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: var(--error);
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  z-index: 10;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+}
+
+.delete-car-btn:hover {
+  background-color: #c0392b;
+  transform: scale(1.1);
+}
+
+.delete-car-btn:disabled {
+  background-color: #95a5a6;
+  cursor: not-allowed;
+}
+
 /* Media queries pour responsivité */
 @media (max-width: 768px) {
   .profile-info, .profile-cars {

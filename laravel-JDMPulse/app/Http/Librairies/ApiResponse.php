@@ -176,6 +176,6 @@ class ApiResponse implements Responsable
      */
     public static function noContent($message = 'Aucun contenu', $headers = [])
     {
-        return new self(true, $message, null, 204, $headers);
+        return new self(true, $message, null, 200, $headers);
     }
 }
