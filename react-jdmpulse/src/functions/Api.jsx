@@ -78,7 +78,7 @@ async function Api(method, route, body, params, token, headers = {}) {
     throw new Error("Méthode non supportée");
 }
 
-// Fonction générique pour gérer les opérations CRUD
+// fonction générique pour gérer les CRUD
 Api.entityOperation = async function(entityType, operation, data, id = null) {
     const token = sessionStorage.getItem("bearer");
     const headers = { 'API-Key': 'Miam0Tacos!' };
@@ -119,13 +119,11 @@ Api.entityOperation = async function(entityType, operation, data, id = null) {
     }
 };
 
-// Fonction générique pour gérer les soumissions de formulaires
+// fonction générique pour gérer les form
 Api.handleEntitySubmit = async function(entityType, formData, currentId, mode, options = {}) {
     try {
-        // Si c'est un update et qu'on a un ID, on fait un update, sinon on fait un create
         const operation = mode === "update" && currentId ? "update" : "create";
         
-        // Pour les utilisateurs en mode update, on supprime le mot de passe s'il est vide
         if (entityType === "users" && operation === "update" && formData.password === "") {
             const dataToSend = {...formData};
             delete dataToSend.password;
@@ -134,7 +132,6 @@ Api.handleEntitySubmit = async function(entityType, formData, currentId, mode, o
             await this.entityOperation(entityType, operation, formData, currentId);
         }
         
-        // Construire le message de succès
         const entityLabel = 
             entityType === "users" ? "Utilisateur" : 
             entityType === "cars" ? "Voiture" :

@@ -49,14 +49,12 @@ body {
   flex-direction: column;
 }
 
-/* Le wrapper principal de l'application doit occuper toute la hauteur */
 #root {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-/* Assurons-nous que les pages utilisent tout l'espace disponible */
 #root > div {
   display: flex;
   flex-direction: column;
@@ -138,7 +136,7 @@ input:focus {
   font-size: 1.2rem;
 }
 
-/* Classes utilitaires */
+/* Classes utilitaires que je vais oublier d'uiliser */
 .text-center { text-align: center; }
 .mt-1 { margin-top: 0.5rem; }
 .mt-2 { margin-top: 1rem; }

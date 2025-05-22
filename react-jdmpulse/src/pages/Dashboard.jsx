@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import "../styles/Dashboard.css";
-import { useNavigate } from "react-router-dom";
 import Api from "../functions/Api";
 import ViewAllModal from "../components/ViewAllModal";
 
@@ -25,7 +24,7 @@ function Dashboard() {
   const [modalColumns, setModalColumns] = useState([]);
   const [currentEntityType, setCurrentEntityType] = useState("");
 
-  // États pour les formulaires
+  //  states pour stocker les données des form
   const [carForm, setCarForm] = useState({ brand: '', model: '', year: '', color: '', generation: '', image_url: '', edition_id: '' });
   const [engineForm, setEngineForm] = useState({ engine_name: '', architecture: '', volume: '', induction: '', fuel_type: '' });
   const [editionForm, setEditionForm] = useState({ edition_name: '' });
@@ -34,7 +33,7 @@ function Dashboard() {
   const [ownForm, setOwnForm] = useState({ car_id: '', user_id: '' });
   const [powerForm, setPowerForm] = useState({ car_id: '', engine_id: '' });
 
-  // États pour stocker les IDs des éléments en cours de modification
+  // states pour stocker les id des éléments en cours de modif
   const [currentCarId, setCurrentCarId] = useState(null);
   const [currentEngineId, setCurrentEngineId] = useState(null);
   const [currentEditionId, setCurrentEditionId] = useState(null);
@@ -43,7 +42,6 @@ function Dashboard() {
   const [currentOwnId, setCurrentOwnId] = useState(null);
   const [currentPowerId, setCurrentPowerId] = useState(null);
 
-  // Handlers de changement
   const handleCarChange = e => setCarForm({ ...carForm, [e.target.name]: e.target.value });
   const handleEngineChange = e => setEngineForm({ ...engineForm, [e.target.name]: e.target.value });
   const handleEditionChange = e => setEditionForm({ ...editionForm, [e.target.name]: e.target.value });
@@ -52,7 +50,7 @@ function Dashboard() {
   const handleOwnChange = e => setOwnForm({ ...ownForm, [e.target.name]: e.target.value });
   const handlePowerChange = e => setPowerForm({ ...powerForm, [e.target.name]: e.target.value });
 
-  // Reset formulaires
+  // reset des form
   const resetCarForm = () => {
     setCarForm({ brand: '', model: '', year: '', color: '', generation: '', image_url: '', edition_id: '' });
     setCurrentCarId(null);
@@ -94,7 +92,7 @@ function Dashboard() {
     setCurrentPowerId(null);
     setPowerMode("create");
   };
-  // Sélectionner un élément pour la mise à jour
+  // séléction d'un élément pour le maj
   const handleSelectForUpdate = (item) => {
     switch (currentEntityType) {
       case "cars":
@@ -176,7 +174,6 @@ function Dashboard() {
     let title = "";
     setCurrentEntityType(entity);
 
-    // Vérification que seuls les superAdmin peuvent accéder aux utilisateurs
     if (entity === "users" && !isSuperAdmin) {
       alert("Seuls les super administrateurs peuvent accéder à cette ressource");
       return;
@@ -248,12 +245,11 @@ function Dashboard() {
       setModalOpen(true);
     }
   };
-  // Fonction générique pour gérer les soumissions de formulaires
+  
   const handleEntitySubmit = async (e, entityType, formData, currentId, mode, resetFormFunc) => {
     e.preventDefault();
     
     try {
-      // Utilisation de la fonction centralisée dans Api.jsx
       const result = await Api.handleEntitySubmit(entityType, formData, currentId, mode);
       
       if (result.success) {
@@ -268,28 +264,28 @@ function Dashboard() {
     }
   };
 
-  // Création/Mise à jour voiture
+  // création/Mise à jour voiture
   const handleSubmitCar = (e) => handleEntitySubmit(e, "cars", carForm, currentCarId, carMode, resetCarForm);
 
-  // Création/Mise à jour moteur
+  // création/Mise à jour moteur
   const handleSubmitEngine = (e) => handleEntitySubmit(e, "engines", engineForm, currentEngineId, engineMode, resetEngineForm);
 
-  // Création/Mise à jour édition
+  // création/Mise à jour édition
   const handleSubmitEdition = (e) => handleEntitySubmit(e, "editions", editionForm, currentEditionId, editionMode, resetEditionForm);
 
-  // Création/Mise à jour motorisation
+  // création/Mise à jour motorisation
   const handleSubmitMoto = (e) => handleEntitySubmit(e, "motorizations", motoForm, currentMotoId, motoMode, resetMotoForm);
 
-  // Création/Mise à jour utilisateur
+  // création/Mise à jour utilisateur
   const handleSubmitUser = (e) => handleEntitySubmit(e, "users", userForm, currentUserId, userMode, resetUserForm);
 
-  // Création/Mise à jour possession
+  // création/Mise à jour possession
   const handleSubmitOwn = (e) => handleEntitySubmit(e, "owns", ownForm, currentOwnId, ownMode, resetOwnForm);
 
-  // Création/Mise à jour power
+  // création/Mise à jour power
   const handleSubmitPower = (e) => handleEntitySubmit(e, "powers", powerForm, currentPowerId, powerMode, resetPowerForm);
   
-  // Suppression d'un élément
+  // suppr un élément
   const handleDeleteItem = async (item) => {
     if (!item || !item.id) {
       alert("Impossible de supprimer cet élément : ID manquant");
@@ -303,7 +299,7 @@ function Dashboard() {
     try {
       await Api.entityOperation(currentEntityType, "delete", null, item.id);
       alert("Élément supprimé avec succès !");
-      // Rafraîchir la liste
+      
       handleViewAll(currentEntityType);
     } catch (err) {
       alert("Erreur lors de la suppression");
@@ -529,7 +525,8 @@ function Dashboard() {
               </form>
             </section>
           </div>
-        </div>        <ViewAllModal 
+        </div>
+        <ViewAllModal 
           open={modalOpen} 
           onClose={() => setModalOpen(false)} 
           title={modalTitle} 

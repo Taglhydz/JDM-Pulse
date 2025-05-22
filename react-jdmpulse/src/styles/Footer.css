@@ -78,7 +78,6 @@ footer h1:after {
   transform: translateX(3px);
 }
 
-/* Media queries pour responsivité */
 @media (max-width: 768px) {
   footer .footer-container {
     flex-direction: column;

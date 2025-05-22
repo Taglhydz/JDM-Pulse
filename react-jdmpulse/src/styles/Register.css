@@ -6,7 +6,7 @@
   align-items: center;
   justify-content: center;
   min-height: calc(100vh - var(--header-height) - var(--footer-height));
-  padding: var(--padding-md); /* Padding réduit */
+  padding: var(--padding-md);
 }
 
 .register-card {
@@ -35,7 +35,7 @@
 .register-header h1 {
   flex-grow: 1;
   text-align: center;
-  margin-right: 2rem; /* Pour compenser l'espace du bouton à gauche */
+  margin-right: 2rem;
 }
 
 .register-header .btn-back {
@@ -50,13 +50,13 @@
 }
 
 .register-form {
-  padding: var(--padding-md); /* Padding réduit */
+  padding: var(--padding-md);
 }
 
 .form-row {
   display: flex;
   gap: var(--padding-md);
-  margin-bottom: 0.2rem; /* Marge réduite */
+  margin-bottom: 0.2rem;
 }
 
 .form-group {
@@ -65,20 +65,20 @@
 
 .form-group label {
   display: block;
-  margin-bottom: 0.1rem; /* Marge réduite */
+  margin-bottom: 0.1rem;
   font-weight: 500;
 }
 
 .register-form input {
-  margin-bottom: 0.3rem; /* Marge réduite */
-  padding: 0.5rem 0.75rem; /* Input plus compact */
+  margin-bottom: 0.3rem;
+  padding: 0.5rem 0.75rem;
 }
 
 .register-actions {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem; /* Espace réduit */
-  margin-top: var(--padding-md); /* Marge réduite */
+  gap: 0.75rem;
+  margin-top: var(--padding-md);
 }
 
 .register-actions button {

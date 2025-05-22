@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
-import Api from "../functions/Api";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 import CarDetailModal from "../components/CarDetailModal";
+import Header         from "../components/Header";
+import Footer         from "../components/Footer";
+import Api            from "../functions/Api";
 import "../styles/Profile.css";
 import "../styles/Discover.css";
 
 function Profile() {
-  const [user, setUser] = useState(null);
-  const [cars, setCars] = useState([]);
+  const [user       , setUser       ] = useState(null);
+  const [cars       , setCars       ] = useState([]);
   const [selectedCar, setSelectedCar] = useState(null);
-  const [isDeleting, setIsDeleting] = useState(false);
+  const [isDeleting , setIsDeleting ] = useState(false);
   const access_token = sessionStorage.getItem("bearer");
-  const userData = sessionStorage.getItem("user");
+  const userData     = sessionStorage.getItem("user"  );
   const userId = userData ? JSON.parse(userData).id : null;
 
   const fetchUserCars = () => {
@@ -47,7 +47,7 @@ function Profile() {
   };
 
   const handleDeleteCar = (e, carId) => {
-    e.stopPropagation(); // Empêche l'ouverture du modal de détail
+    e.stopPropagation();
     
     if (window.confirm("Êtes-vous sûr de vouloir supprimer cette voiture de votre collection ?")) {
       setIsDeleting(true);
@@ -107,7 +107,6 @@ function Profile() {
             </div>
           )}
         </div>
-        {/* Déplacer le modal en dehors du conteneur pour éviter les problèmes de placement */}
         {selectedCar && <CarDetailModal car={selectedCar} onClose={handleCloseModal} />}
       </div>
       <Footer />

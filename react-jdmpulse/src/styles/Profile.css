@@ -87,7 +87,6 @@
   transform: translateX(5px);
 }
 
-/* Agrandissement des cartes uniquement dans la section profile-cars */
 .profile-cars .car-card {
   max-width: 350px;
   min-width: 260px;
@@ -105,7 +104,6 @@
   margin-bottom: 10px;
 }
 
-/* Style pour le bouton de suppression */
 .delete-car-btn {
   position: absolute;
   top: 10px;
@@ -136,7 +134,6 @@
   cursor: not-allowed;
 }
 
-/* Media queries pour responsivité */
 @media (max-width: 768px) {
   .profile-info, .profile-cars {
     padding: var(--padding-md);

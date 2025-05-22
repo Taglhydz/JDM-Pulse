@@ -49,12 +49,11 @@ header h1 {
   transform: scale(0.98);
 }
 
-/* Styles pour l'en-tête d'écrans de connexion/inscription */
 header:not(:has(#nav)) {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0.5rem var(--padding-md); /* Version plus compacte pour l'en-tête simple */
+  padding: 0.5rem var(--padding-md);
 }
 
 header:not(:has(#nav)) h1 {
@@ -78,7 +77,6 @@ header:not(:has(#nav)) h1:hover:after {
   transform: scaleX(1);
 }
 
-/* Style pour le bouton logout */
 .logout-btn {
   position: absolute;
   top: 18px;
@@ -100,7 +98,6 @@ header:not(:has(#nav)) h1:hover:after {
   color: #fff;
 }
 
-/* Style pour le bouton dashboard */
 .dashboard-btn {
   position: absolute;
   top: 18px;
@@ -122,7 +119,6 @@ header:not(:has(#nav)) h1:hover:after {
   color: #fff;
 }
 
-/* Style pour le trait sous le header */
 .header-divider {
   width: 40vw;
   max-width: 600px;
@@ -133,19 +129,75 @@ header:not(:has(#nav)) h1:hover:after {
   border-radius: 2px;
 }
 
-/* Media queries pour responsivité */
+@media (max-width: 1450px) and (min-width: 769px) {
+  #nav {
+    max-width: 100%;
+    padding: 0 var(--padding-sm);
+    justify-content: center;
+    gap: 1rem;
+  }
+  
+  #nav li a {
+    padding: 1.5rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  header h1 {
+    font-size: 1.5rem;
+  }
+  
+  .logout-btn, .dashboard-btn {
+    padding: 0.8rem 1.5rem;
+    font-size: 0.9rem;
+    top: 15px;
+  }
+  
+  .logout-btn {
+    right: 15px;
+  }
+  
+  .dashboard-btn {
+    left: 15px;
+  }
+}
+
 @media (max-width: 768px) {
   #nav {
     flex-direction: column;
     height: auto;
     padding: var(--padding-sm) var(--padding-md);
+    padding-top: 60px; /* Espace pour les boutons dashboard/logout */
+    padding-bottom: 20px;
   }
   
   #nav li {
     margin: 0.5rem 0;
+    width: 100%;
+    text-align: center;
   }
   
   header {
     height: auto;
+    position: relative;
+  }
+
+  .logout-btn, .dashboard-btn {
+    position: fixed;
+    top: 10px;
+    z-index: 200;
+  }
+  
+  .logout-btn {
+    right: 10px;
+  }
+  
+  .dashboard-btn {
+    left: 10px;
+  }
+
+  #nav li a {
+    padding: 1rem 2rem;
+    display: inline-block;
+    width: 80%;
   }
 }

@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import Api from "../functions/Api";
+import CarDetailModal from "../components/CarDetailModal";
+import Header         from "../components/Header";
+import Footer         from "../components/Footer";
+import Api            from "../functions/Api";
 import "../styles/Liked.css";
 import "../styles/HeartButton.css";
-import CarDetailModal from "../components/CarDetailModal";
 
 function Liked() {
-  const [likedCars, setLikedCars] = useState([]);
-  const [likesCount, setLikesCount] = useState({});
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [likedCars,   setLikedCars  ] = useState([]);
+  const [likesCount,  setLikesCount ] = useState({});
+  const [loading,     setLoading    ] = useState(true);
+  const [error,       setError      ] = useState(null);
   const [selectedCar, setSelectedCar] = useState(null);
 
   useEffect(() => {
@@ -19,13 +19,13 @@ function Liked() {
         setLoading(true);
         const userId = JSON.parse(sessionStorage.getItem("user")).id;
         
-        // Récupérer les voitures likées par l'utilisateur
+        // récupére les voitures likés par l'user
         const likedResponse = await Api("GET", `likes-by-cars-user/${userId}`, null, "", true);
         
         if (likedResponse.status === 200 && likedResponse.body.success) {
           const likes = likedResponse.body.data;
           
-          // Pour chaque voiture likée, récupérer les détails
+          // chaque voiture likée -> récupérer les détails
           const carsWithDetails = await Promise.all(
             likes.map(async (like) => {
               const carResponse = await Api("GET", `cars/${like.car_id}`, null, "", true);
@@ -41,7 +41,7 @@ function Liked() {
           setError("Impossible de récupérer les voitures likées");
         }
         
-        // Récupérer le nombre de likes pour chaque voiture
+        // récupére le nombre de likes de chaque car
         const likesCountResponse = await Api("GET", "likes-by-car", null, "", true);
         if (likesCountResponse.status === 200 && likesCountResponse.body.success) {
           const likesData = likesCountResponse.body.data;
@@ -67,29 +67,24 @@ function Liked() {
     fetchLikedCars();
   }, []);
   const handleUnlike = async (carId, event) => {
-    event.stopPropagation(); // Empêche l'ouverture du modal lors du clic sur le bouton unlike
+    event.stopPropagation();
     try {
       const userId = JSON.parse(sessionStorage.getItem("user")).id;
       
-      // Mettre à jour l'interface immédiatement avant la requête API
       setLikedCars(prevCars => prevCars.filter(car => car.id !== carId));
       
-      // Mettre à jour le compteur de likes
       setLikesCount(prev => ({
         ...prev,
-        [carId]: Math.max((prev[carId] || 1) - 1, 0) // Évite les compteurs négatifs
+        [carId]: Math.max((prev[carId] || 1) - 1, 0)
       }));
       
-      // Envoyer la requête unlike
       const response = await Api("POST", "unlike", { user_id: userId, car_id: carId }, `/${carId}`, true);
       
       if (!response.status === 200 || !response.body.success) {
-        // En cas d'erreur, annuler les changements
         const carResponse = await Api("GET", `cars/${carId}`, null, "", true);
         if (carResponse.status === 200 && carResponse.body.success) {
           setLikedCars(prevCars => [...prevCars, carResponse.body.data]);
           
-          // Restaurer le compteur de likes
           setLikesCount(prev => ({
             ...prev,
             [carId]: (prev[carId] || 0) + 1

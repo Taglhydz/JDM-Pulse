@@ -1,18 +1,18 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { useNavigate } from "react-router-dom";
+import Api 	  from "../functions/Api";
 import "../styles/Login.css";
-import Api from "../functions/Api";
 
 function Login() {
 	const navigate = useNavigate();
-	const [formData, setFormData] = useState({
+	const [error	, setError	 ] = useState("");
+	const [loading	, setLoading ] = useState(false)
+	const [formData	, setFormData] = useState({
 		email: "",
 		password: ""
-	});
-	const [error, setError] = useState("");
-	const [loading, setLoading] = useState(false);
+	});;
 
 	const handleChange = (e) => {
 		const { id, value } = e.target;
@@ -34,9 +34,9 @@ function Login() {
 			}, "", false, {});
 
 			if (response && response.status === 200 && response.body && response.body.data && response.body.data.access_token) {
-				// Stocke le token dans le sessionStorage
+				// stock le token dans le sessionStorage
 				sessionStorage.setItem("bearer", response.body.data.access_token);
-				// Stocke également les informations de l'utilisateur si nécessaire
+				// stock aussi les infos de l'user
 				sessionStorage.setItem("user", JSON.stringify(response.body.data));
 				navigate("/discover");
 			} else if (response && response.body && response.body.message) {

@@ -1,44 +1,41 @@
 import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { useNavigate } from "react-router-dom";
+import Api 	  from "../functions/Api";
+import CarDetailModal from "../components/CarDetailModal";
 import "../styles/Discover.css";
 import "../styles/HeartButton.css";
-import Api from "../functions/Api";
-import CarDetailModal from "../components/CarDetailModal";
 
 function Discover() {
-	const navigate = useNavigate();
-	const [cars, setCars] = useState([]);
+	const [cars, 		setCars		  ] = useState([]);
 	const [selectedCar, setSelectedCar] = useState(null);
-	const [userLikes, setUserLikes] = useState([]);
-	const [likesCount, setLikesCount] = useState({});
-	const [loading, setLoading] = useState(true);
+	const [userLikes, 	setUserLikes  ] = useState([]);
+	const [likesCount, 	setLikesCount ] = useState({});
+	const [loading, 	setLoading	  ] = useState(true);
 	const access_token = sessionStorage.getItem("bearer");
 
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
 				setLoading(true);
-				// Récupérer toutes les voitures
+
 				const carsResponse = await Api("GET", "cars/all", null, "", access_token, {'API-Key': 'Miam0Tacos!'});
 				if (carsResponse && carsResponse.status === 200 && carsResponse.body && carsResponse.body.data) {
 					setCars(carsResponse.body.data);
 					console.log("Cars data:", carsResponse.body.data);
 				}
 
-				// Récupérer les likes de l'utilisateur
 				const userId = JSON.parse(sessionStorage.getItem("user")).id;
 				const userLikesResponse = await Api("GET", `likes-by-cars-user/${userId}`, null, "", true);
 				if (userLikesResponse.status === 200 && userLikesResponse.body.success) {
 					const likes = userLikesResponse.body.data;
-					// Créer un tableau d'IDs de voitures likées par l'utilisateur
+					// tableau id des voitures likées par l'user
 					const likedCarIds = likes.map(like => like.car_id);
 					setUserLikes(likedCarIds);
 					console.log("User likes:", likedCarIds);
 				}
 
-				// Récupérer le nombre de likes pour chaque voiture
+				// récupére le nombre de likes pour chaque car
 				const likesCountResponse = await Api("GET", "likes-by-car", null, "", true);
 				if (likesCountResponse.status === 200 && likesCountResponse.body.success) {
 					const likesData = likesCountResponse.body.data;
@@ -70,23 +67,21 @@ function Discover() {
 		setSelectedCar(null);
 	};
 	const handleLike = async (carId, event) => {
-		event.stopPropagation(); // Empêche l'ouverture du modal lors du clic sur le bouton like
+		event.stopPropagation();
 		try {
 			const userId = JSON.parse(sessionStorage.getItem("user")).id;
 			
 			if (userLikes.includes(carId)) {
-				// Mettre à jour l'interface immédiatement avant la requête API
 				setUserLikes(prevLikes => prevLikes.filter(id => id !== carId));
 				setLikesCount(prev => ({
 					...prev,
-					[carId]: Math.max((prev[carId] || 1) - 1, 0) // Évite les compteurs négatifs
+					[carId]: Math.max((prev[carId] || 1) - 1, 0)
 				}));
 				
-				// Si la voiture est déjà likée, unlike
+				// si la voiture est déjà likée -> unlike
 				const response = await Api("POST", "unlike", { user_id: userId, car_id: carId }, `/${carId}`, true);
 				
 				if (!response.status === 200 || !response.body.success) {
-					// En cas d'erreur, revenir à l'état précédent
 					setUserLikes(prevLikes => [...prevLikes, carId]);
 					setLikesCount(prev => ({
 						...prev,
@@ -95,18 +90,15 @@ function Discover() {
 					console.error("Erreur lors du unlike");
 				}
 			} else {
-				// Mettre à jour l'interface immédiatement avant la requête API
 				setUserLikes(prevLikes => [...prevLikes, carId]);
 				setLikesCount(prev => ({
 					...prev,
 					[carId]: (prev[carId] || 0) + 1
 				}));
 				
-				// Envoyer la requête like
 				const response = await Api("POST", "like", { user_id: userId, car_id: carId }, `/${carId}`, true);
 				
 				if (!response.status === 200 || !response.body.success) {
-					// En cas d'erreur, revenir à l'état précédent
 					setUserLikes(prevLikes => prevLikes.filter(id => id !== carId));
 					setLikesCount(prev => ({
 						...prev,

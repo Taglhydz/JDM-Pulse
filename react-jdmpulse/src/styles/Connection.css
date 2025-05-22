@@ -6,7 +6,7 @@
   align-items: center;
   justify-content: center;
   min-height: calc(100vh - var(--header-height) - var(--footer-height));
-  padding: var(--padding-md); /* Padding réduit */
+  padding: var(--padding-md);
   background: linear-gradient(135deg, rgba(0, 131, 143, 0.1), rgba(44, 62, 80, 0.1));
 }
 
@@ -14,7 +14,7 @@
   background-color: white;
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
-  padding: var(--padding-md); /* Padding réduit */
+  padding: var(--padding-md);
   width: 100%;
   max-width: 500px;
   text-align: center;
@@ -27,12 +27,12 @@
 
 .connection h1 {
   color: var(--primary);
-  margin-bottom: 0.5rem; /* Marge réduite */
+  margin-bottom: 0.5rem;
   font-size: 2rem;
 }
 
 .connection p {
-  margin-bottom: var(--padding-md); /* Marge réduite */
+  margin-bottom: var(--padding-md);
   color: var(--secondary);
   font-size: 1.1rem;
 }
@@ -41,11 +41,11 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--padding-md);
-  margin-top: var(--padding-md); /* Marge réduite */
+  margin-top: var(--padding-md);
 }
 
 .connection-options button {
-  height: 80px; /* Hauteur réduite */
+  height: 80px;
   display: flex;
   flex-direction: column;
   align-items: center;

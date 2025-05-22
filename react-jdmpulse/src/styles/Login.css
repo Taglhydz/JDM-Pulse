@@ -25,7 +25,7 @@
 .login-header {
   background-color: var(--primary);
   color: var(--text-light);
-  padding: var(--padding-md); /* Padding réduit */
+  padding: var(--padding-md);
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -34,7 +34,7 @@
 .login-header h1 {
   flex-grow: 1;
   text-align: center;
-  margin-right: 2rem; /* Pour compenser l'espace du bouton à gauche */
+  margin-right: 2rem;
 }
 
 .login-header .btn-back {
@@ -49,11 +49,11 @@
 }
 
 .login-form {
-  padding: var(--padding-md); /* Padding réduit */
+  padding: var(--padding-md);
 }
 
 .form-group {
-  margin-bottom: 0.75rem; /* Marge réduite */
+  margin-bottom: 0.75rem;
 }
 
 .form-group label {
@@ -63,8 +63,8 @@
 }
 
 .login-form input {
-  margin-bottom: 0.5rem; /* Marge réduite */
-  padding: 0.5rem 0.75rem; /* Input plus compact */
+  margin-bottom: 0.5rem;
+  padding: 0.5rem 0.75rem;
 }
 
 .error-message {
@@ -80,8 +80,8 @@
 .login-actions {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem; /* Espace réduit */
-  margin-top: var(--padding-md); /* Marge réduite */
+  gap: 0.75rem;
+  margin-top: var(--padding-md);
 }
 
 .login-actions button {

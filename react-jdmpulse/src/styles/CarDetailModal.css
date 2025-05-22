@@ -121,3 +121,61 @@
   border: none;
   border-top: 3px solid #e0e0e0;
 }
+
+@media (max-width: 1600px) {
+  .car-modal {
+    width: 50vw;
+  }
+}
+
+@media (max-width: 1200px) {
+  .car-modal {
+    width: 60vw;
+  }
+}
+
+@media (max-width: 992px) {
+  .car-modal {
+    width: 70vw;
+  }
+  
+  .car-modal img {
+    height: 300px;
+    max-height: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .car-modal {
+    width: 85vw;
+    height: 90vh;
+    padding-bottom: 16px;
+  }
+  
+  .car-modal img {
+    height: 250px;
+    max-height: 250px;
+  }
+  
+  .car-modal p {
+    font-size: 1rem;
+  }
+  
+  .car-engine-table {
+    font-size: 0.9rem;
+  }
+  
+  .car-engine-th, .car-engine-td {
+    padding: 6px;
+  }
+  
+  .car-modal-close {
+    top: 12px;
+    right: 12px;
+    font-size: 1.8rem;
+    width: 35px;
+    height: 35px;
+    background-color: rgba(255,255,255,0.7);
+    border-radius: 50%;
+  }
+}
