@@ -29,7 +29,7 @@ Route::middleware('throttle:60,0.1')->group(function () {
         Route::get('/user'  , [AuthController::class, 'user'  ]);
         
         Route::middleware('check.api.key')->group(function () {
-            // Prefix pour User
+            // Routes pour User
             Route::prefix('users')->group(function () {
                 Route::get	 ('/all'			, [UserController::class, 'index'		  ]);
                 Route::post	 ('/create'			, [UserController::class, 'store'		  ]);
@@ -37,10 +37,10 @@ Route::middleware('throttle:60,0.1')->group(function () {
                 Route::post	 ('/update/{id}'	, [UserController::class, 'update'		  ]);
                 Route::delete('/delete/{id}'	, [UserController::class, 'destroy'		  ]);
                 Route::post	 ('/update-pwd/{id}', [UserController::class, 'updatePassword']);
-            });
+            }); 
         });
 
-        // Prefix pour Car
+        // Routes pour Car
         Route::prefix('cars')->group(function () {
             Route::get	 ('/all'		, [CarController::class, 'index' 			 ]);		
             Route::get	 ('/{id}'		, [CarController::class, 'show'  			 ]);
@@ -51,7 +51,7 @@ Route::middleware('throttle:60,0.1')->group(function () {
             Route::get	 ('/user/{id}'  , [OwnController::class, 'getCarsByUserId'	 ]);
         });
 
-        // Prefix pour Edition
+        // Routes pour Edition
         Route::prefix('editions')->group(function () {
             Route::get   ('/all'		, [EditionController::class, 'index'  ]);
             Route::post  ('/create'		, [EditionController::class, 'store'  ]);
@@ -60,7 +60,7 @@ Route::middleware('throttle:60,0.1')->group(function () {
             Route::delete('/delete/{id}', [EditionController::class, 'destroy']);
         });
 
-        // Prefix pour Engine
+        // Routes pour Engine
         Route::prefix('engines')->group(function () {
             Route::get   ('/all'		, [EngineController::class, 'index'  ]);
             Route::post  ('/create'		, [EngineController::class, 'store'  ]);
@@ -69,7 +69,7 @@ Route::middleware('throttle:60,0.1')->group(function () {
             Route::delete('/delete/{id}', [EngineController::class, 'destroy']);
         });
 
-        // Prefix pour Motorization
+        // Routes pour Motorization
         Route::prefix('motorizations')->group(function () {
             Route::get   ('/all'		, [MotorizationController::class, 'index'  ]);
             Route::post  ('/create'		, [MotorizationController::class, 'store'  ]);
@@ -78,7 +78,7 @@ Route::middleware('throttle:60,0.1')->group(function () {
             Route::delete('/delete/{id}', [MotorizationController::class, 'destroy']);
         });
 
-        // Prefix pour Own
+        // Routes pour Own
         Route::prefix('owns')->group(function () {
             Route::get   ('/all'		            , [OwnController::class, 'index'  ]);
             Route::post  ('/create'		            , [OwnController::class, 'store'  ]);
@@ -87,7 +87,7 @@ Route::middleware('throttle:60,0.1')->group(function () {
             Route::delete('/delete/{userId}/{carId}', [OwnController::class, 'destroy']);
         });
 
-        // Prefix pour Power
+        // Routes pour Power
         Route::prefix('powers')->group(function () {
             Route::get   ('/all'		, [PowerController::class, 'index'  ]);
             Route::post  ('/create'		, [PowerController::class, 'store'  ]);
