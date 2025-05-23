@@ -6,6 +6,7 @@
   font-size: 2.2rem;
   font-weight: 700;
   letter-spacing: 1px;
+  color: var(--primary-dark);
 }
 
 .cars-list {
