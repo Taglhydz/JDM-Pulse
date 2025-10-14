@@ -8,7 +8,7 @@ JDM Pulse est une application dédiée aux passionnés de **Japanese Domestic Ma
 👉 **Like & Favoris** – Like tes modèles préférés et sauvegarde-les.  
 👉 **Ajout de JDM** – Partage ta propre voiture ou celles que tu repères.  
 👉 **Classements en temps réel** – Découvre les véhicules les plus appréciés.  
-❓ **Communauté** – Interagis avec d'autres passionnés et commente les JDM.
+❓  **Communauté** – Interagis avec d'autres passionnés et commente les JDM.
 
 ## 🚀 Développement  
 

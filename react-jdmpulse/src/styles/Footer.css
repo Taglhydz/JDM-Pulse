@@ -1,0 +1,104 @@
+@import url('./Base.css');
+
+footer {
+  background-color: var(--secondary);
+  color: var(--text-light);
+  padding: var(--padding-md) var(--padding-md);
+  margin-top: auto;
+  width: 100%;
+}
+
+footer .footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: var(--container-width);
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+
+.footer-brand {
+  flex: 1;
+  min-width: 150px;
+}
+
+.footer-copyright {
+  flex: 2;
+  text-align: center;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.footer-links {
+  flex: 1;
+  text-align: right;
+  min-width: 150px;
+}
+
+footer h1 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 0.5rem;
+  position: relative;
+  padding-bottom: 5px;
+}
+
+footer h1:after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 50px;
+  height: 3px;
+  background-color: var(--primary);
+}
+
+.github-link {
+  color: var(--primary-light);
+  font-weight: 500;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+}
+
+.github-link:hover {
+  color: var(--text-light);
+  transform: translateX(5px);
+}
+
+.github-link:before {
+  content: "→";
+  margin-right: 0.5rem;
+  transition: var(--transition);
+}
+
+.github-link:hover:before {
+  transform: translateX(3px);
+}
+
+@media (max-width: 768px) {
+  footer .footer-container {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .footer-brand, .footer-copyright, .footer-links {
+    text-align: center;
+    min-width: 100%;
+  }
+  
+  footer h1:after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .github-link {
+    justify-content: center;
+  }
+  
+  .github-link:hover {
+    transform: none;
+  }
+}

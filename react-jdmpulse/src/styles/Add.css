@@ -1,0 +1,120 @@
+@import url('./Base.css');
+
+.add-page {
+  min-height: 100vh;
+  background: var(--background);
+  padding-bottom: 2rem;
+}
+
+.add-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem 2rem 1rem 2rem;
+  flex-wrap: wrap;
+}
+
+.add-header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary-dark);
+  margin: 0 1.5rem 0 0;
+}
+
+.add-search-bar {
+  min-width: 260px;
+  max-width: 350px;
+  font-size: 1.1rem;
+  padding: 0.7rem 1.2rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  transition: border 0.2s;
+}
+
+.add-search-bar:focus {
+  border: 1.5px solid var(--primary);
+  outline: none;
+}
+
+.cars-list {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.5rem;
+  margin: 1rem 0;
+  padding: 0 1rem;
+}
+
+.car-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  padding: 16px;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+  max-width: 350px;
+  margin: 0.7rem auto;
+  position: relative;
+}
+
+.car-card:hover {
+  transform: translateY(-7px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+.add-car-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 45px;
+  height: 45px;
+  border-radius: 16px;
+  background-color: var(--success);
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: bold;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.13);
+  transition: background 0.2s, transform 0.2s;
+  cursor: pointer;
+}
+
+.add-car-btn:hover:not(:disabled) {
+  background-color: #27ae60;
+  transform: scale(1.1);
+}
+
+.add-car-btn:disabled {
+  background-color: #b2bec3;
+  cursor: not-allowed;
+}
+
+@media (max-width: 1200px) {
+  .cars-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 900px) {
+  .cars-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .add-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+}
+@media (max-width: 600px) {
+  .cars-list {
+    grid-template-columns: 1fr;
+  }
+  .add-header {
+    padding: 1rem 0.5rem 1rem 0.5rem;
+  }
+}

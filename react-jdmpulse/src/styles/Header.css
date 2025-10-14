@@ -1,0 +1,203 @@
+@import url('./Base.css');
+
+header {
+  background-color: var(--primary);
+  color: var(--text-light);
+  box-shadow: var(--box-shadow);
+  height: var(--header-height);
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 0;
+}
+
+header h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+#nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 var(--padding-md);
+  height: 100%;
+}
+
+#nav li {
+  position: relative;
+}
+
+#nav li a {
+  color: var(--text-light);
+  font-weight: 500;
+  padding: 1.5rem 3rem;
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+}
+
+#nav li a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+#nav li a:active {
+  transform: scale(0.98);
+}
+
+header:not(:has(#nav)) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem var(--padding-md);
+}
+
+header:not(:has(#nav)) h1 {
+  position: relative;
+  padding-bottom: 5px;
+}
+
+header:not(:has(#nav)) h1:after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 3px;
+  background-color: var(--text-light);
+  transform: scaleX(0.7);
+  transition: transform 0.3s ease;
+}
+
+header:not(:has(#nav)) h1:hover:after {
+  transform: scaleX(1);
+}
+
+.logout-btn {
+  position: absolute;
+  top: 18px;
+  right: 32px;
+  background: var(--primary-dark);
+  color: var(--text-light);
+  border: 1px solid var(--primary);
+  border-radius: 6px;
+  padding: 1rem 2rem;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+  z-index: 200;
+}
+
+.logout-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.dashboard-btn {
+  position: absolute;
+  top: 18px;
+  left: 32px;
+  background: var(--primary-dark);
+  color: var(--text-light);
+  border: 1px solid var(--primary);
+  border-radius: 6px;
+  padding: 1rem 2rem;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+  z-index: 200;
+}
+
+.dashboard-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.header-divider {
+  width: 40vw;
+  max-width: 600px;
+  height: 3px !important;
+  min-height: 3px !important;
+  background: #d1d1d1;
+  margin: var(--padding-md) auto;
+  border-radius: 2px;
+}
+
+@media (max-width: 1450px) and (min-width: 769px) {
+  #nav {
+    max-width: 100%;
+    padding: 0 var(--padding-sm);
+    justify-content: center;
+    gap: 1rem;
+  }
+  
+  #nav li a {
+    padding: 1.5rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  header h1 {
+    font-size: 1.5rem;
+  }
+  
+  .logout-btn, .dashboard-btn {
+    padding: 0.8rem 1.5rem;
+    font-size: 0.9rem;
+    top: 15px;
+  }
+  
+  .logout-btn {
+    right: 15px;
+  }
+  
+  .dashboard-btn {
+    left: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  #nav {
+    flex-direction: column;
+    height: auto;
+    padding: var(--padding-sm) var(--padding-md);
+    padding-top: 60px; /* Espace pour les boutons dashboard/logout */
+    padding-bottom: 20px;
+  }
+  
+  #nav li {
+    margin: 0.5rem 0;
+    width: 100%;
+    text-align: center;
+  }
+  
+  header {
+    height: auto;
+    position: relative;
+  }
+
+  .logout-btn, .dashboard-btn {
+    position: fixed;
+    top: 10px;
+    z-index: 200;
+  }
+  
+  .logout-btn {
+    right: 10px;
+  }
+  
+  .dashboard-btn {
+    left: 10px;
+  }
+
+  #nav li a {
+    padding: 1rem 2rem;
+    display: inline-block;
+    width: 80%;
+  }
+}
