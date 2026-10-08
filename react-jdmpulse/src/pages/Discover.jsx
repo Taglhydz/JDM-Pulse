@@ -57,7 +57,7 @@ function Discover() {
 		};
 
 		fetchData();
-	}, []);
+	}, [access_token]);
 
 	const handleCardClick = (car) => {
 		setSelectedCar(car);

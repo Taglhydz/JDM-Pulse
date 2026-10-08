@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import CarDetailModal from "../components/CarDetailModal";
 import Header         from "../components/Header";
 import Footer         from "../components/Footer";
@@ -15,7 +15,8 @@ function Profile() {
   const userData     = sessionStorage.getItem("user"  );
   const userId = userData ? JSON.parse(userData).id : null;
 
-  const fetchUserCars = () => {
+  // useCallback pour garder la même fonction entre les rendus (sinon le useEffect boucle)
+  const fetchUserCars = useCallback(() => {
     Api("GET", `cars/user/${userId}`, null, "", access_token, { "API-Key": "Miam0Tacos!" })
       .then(carResponse => {
         if (carResponse && carResponse.status === 200 && carResponse.body && carResponse.body.data) {
@@ -23,7 +24,7 @@ function Profile() {
         }
       })
       .catch(error => console.error(error));
-  };
+  }, [userId, access_token]);
 
   useEffect(() => {
     Api("GET", "users/" + userId, null, "", access_token, { "API-Key": "Miam0Tacos!" })
@@ -34,7 +35,7 @@ function Profile() {
         }
       })
       .catch(error => console.error(error));
-  }, []);
+  }, [userId, access_token, fetchUserCars]);
 
   if (!user) return <div>Chargement...</div>;
 

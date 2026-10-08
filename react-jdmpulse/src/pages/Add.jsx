@@ -25,7 +25,7 @@ function Add() {
         }
       })
       .catch(error => console.error(error));
-  }, []);
+  }, [access_token]);
 
   useEffect(() => {
     if (!search) {
@@ -52,7 +52,7 @@ function Add() {
         })
         .catch(error => console.error(error));
     }
-  }, [userId]);
+  }, [userId, access_token]);
 
   const handleAddCar = (e, carId) => {
     e.stopPropagation();

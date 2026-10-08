@@ -26,7 +26,7 @@ function CarDetailModal({ car, onClose }) {
     } else {
       setDetails(null);
     }
-  }, [car]);
+  }, [car, access_token]);
 
   useEffect(() => {
     console.log('Valeur de details dans le modal:', details);

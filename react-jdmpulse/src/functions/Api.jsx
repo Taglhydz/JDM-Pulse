@@ -36,7 +36,6 @@ async function Api(method, route, body, params, token, headers = {}) {
             console.error("Une erreur est survenue : ", error);
             return { status: 500, message: error.message };
         }
-        return;
     }
     if (method === "GET") {
         try {
@@ -56,7 +55,6 @@ async function Api(method, route, body, params, token, headers = {}) {
             console.error("Une erreur est survenue:", error);
             return { status: error.status, message: error.message }; 
         }
-        return;
     }
     if (method === "DELETE") {
         try {
@@ -75,7 +73,6 @@ async function Api(method, route, body, params, token, headers = {}) {
             console.error("Une erreur est survenue lors de la suppression:", error);
             return { status: error.status, message: error.message }; 
         }
-        return;
     }
     throw new Error("Méthode non supportée");
 }

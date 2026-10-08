@@ -95,9 +95,6 @@ function Login() {
 									required
 								/>
 							</div>
-							<div className="forgot-password">
-								<a href="#">Forgot password?</a>
-							</div>
 							<div className="login-actions">
 								<button type="submit" disabled={loading}>
 									{loading ? "Connexion..." : "Submit"}
