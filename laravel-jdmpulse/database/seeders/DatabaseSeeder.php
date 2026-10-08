@@ -35,12 +35,18 @@ class DatabaseSeeder extends Seeder
         DB::table('users')->truncate();
         Schema::enableForeignKeyConstraints();
 
+        // Le dépôt est public : en production, aucun mot de passe connu. Les comptes fictifs ont un
+        // mot de passe aléatoire et le superAdmin celui défini par ADMIN_PASSWORD dans le .env du serveur
+        $production    = app()->environment('production');
+        $password      = fn () => bcrypt($production ? Str::random(32) : 'password');
+        $adminPassword = bcrypt($production ? (config('app.admin_password') ?: Str::random(32)) : 'password');
+
         // Créer des utilisateurs
-        User::factory()->create(['first_name' => 'Tom',   'last_name' => 'Vaillant', 'date_of_birth' => '2004-11-11', 'email' => 'tom.vaillant@eg.com',  'role' => 'superAdmin', 'password' => bcrypt('password')]);
-        User::factory()->create(['first_name' => 'John',  'last_name' => 'Doe',      'date_of_birth' => '2000-05-01', 'email' => 'john.doe@eg.com',      'role' => 'admin',      'password' => bcrypt('password')]);
-        User::factory()->create(['first_name' => 'Jane',  'last_name' => 'Smith',    'date_of_birth' => '1994-02-21', 'email' => 'jane.smith@eg.com',    'role' => 'user',       'password' => bcrypt('password')]);
-        User::factory()->create(['first_name' => 'Alice', 'last_name' => 'Liddell',  'date_of_birth' => '2002-08-05', 'email' => 'alice.liddell@eg.com', 'role' => 'user',       'password' => bcrypt('password')]);
-        User::factory()->create(['first_name' => 'Bob',   'last_name' => 'Builder',  'date_of_birth' => '2001-10-17', 'email' => 'bob.builder@eg.com',   'role' => 'user',       'password' => bcrypt('password')]);
+        User::factory()->create(['first_name' => 'Tom',   'last_name' => 'Vaillant', 'date_of_birth' => '2004-11-11', 'email' => 'tom.vaillant@eg.com',  'role' => 'superAdmin', 'password' => $adminPassword]);
+        User::factory()->create(['first_name' => 'John',  'last_name' => 'Doe',      'date_of_birth' => '2000-05-01', 'email' => 'john.doe@eg.com',      'role' => 'admin',      'password' => $password()]);
+        User::factory()->create(['first_name' => 'Jane',  'last_name' => 'Smith',    'date_of_birth' => '1994-02-21', 'email' => 'jane.smith@eg.com',    'role' => 'user',       'password' => $password()]);
+        User::factory()->create(['first_name' => 'Alice', 'last_name' => 'Liddell',  'date_of_birth' => '2002-08-05', 'email' => 'alice.liddell@eg.com', 'role' => 'user',       'password' => $password()]);
+        User::factory()->create(['first_name' => 'Bob',   'last_name' => 'Builder',  'date_of_birth' => '2001-10-17', 'email' => 'bob.builder@eg.com',   'role' => 'user',       'password' => $password()]);
         // Compte démo (id 6) : connexion uniquement via /auth/demo, mot de passe aléatoire inconnu
         User::factory()->create(['first_name' => 'Visiteur', 'last_name' => 'Démo', 'date_of_birth' => '2000-01-01', 'email' => config('app.demo_email'), 'role' => 'user', 'password' => bcrypt(Str::random(32))]);
 
