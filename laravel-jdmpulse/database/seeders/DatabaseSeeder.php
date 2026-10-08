@@ -55,7 +55,7 @@ class DatabaseSeeder extends Seeder
         Car::factory()->create(['brand' => 'Honda',  'model' => 'Civic',   'year' => '1999', 'color' => 'Noir',        'generation' => 'EK9',   'image_url' => 'https://classicregister.com/sites/default/files/1997%20Honda%20Civic%20Type%20R%20EK9%20Images%202020%20NZ%20%282%29.jpg', 'edition_id' => 2]);
         Car::factory()->create(['brand' => 'Mazda',  'model' => 'RX-7',    'year' => '1997', 'color' => 'Blanc',       'generation' => 'FD3S',  'image_url' => 'https://images.squarespace-cdn.com/content/v1/556bcfd7e4b0923c3c70d86c/1527750744747-559WQIWSO7GZTCYQ69XO/IMG_1268+copy+copy.jpg', 'edition_id' => 3]);
         Car::factory()->create(['brand' => 'Nissan', 'model' => 'Skyline', 'year' => '2000', 'color' => 'Bleu',        'generation' => 'R34',   'image_url' => 'https://img1.bonhams.com/image?src=Images/live/2023-03/27/25327802-1-1.jpg', 'edition_id' => 4]);
-        Car::factory()->create(['brand' => 'Toyota', 'model' => 'Supra',   'year' => '1998', 'color' => 'Rouge',       'generation' => 'Mk4',   'image_url' => 'https://carjager-dev.mo.cloudinary.net/https://wp.carjager.com/wp-content/uploads/2023/03/Toyota-Supra-EU-02.jpeg?tx=w_1905', 'edition_id' => null]);
+        Car::factory()->create(['brand' => 'Toyota', 'model' => 'Supra',   'year' => '1998', 'color' => 'Rouge',       'generation' => 'Mk4',   'image_url' => 'https://www.swapland.fr/img/cms/Photo%20blog/toyota-supra-turbo-1993.jpg', 'edition_id' => null]);
 
         // Créer des moteurs
         Engine::factory()->create(['engine_name' => 'DOHC 16V', 'architecture' => 'I4',     'volume' => '1.6L', 'induction' => 'Atmospherique', 'fuel_type' => 'Essence']);
