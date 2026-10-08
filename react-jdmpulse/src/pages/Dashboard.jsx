@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Navigate } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import "../styles/Dashboard.css";
@@ -9,6 +10,7 @@ function Dashboard() {
   const userData = sessionStorage.getItem("user");
   const user = userData ? JSON.parse(userData) : null;
   const isSuperAdmin = user && user.role === "superAdmin";
+  const isAdmin      = user && (user.role === "admin" || isSuperAdmin);
 
   const [carMode, setCarMode] = useState("create");
   const [engineMode, setEngineMode] = useState("create");
@@ -210,7 +212,7 @@ function Dashboard() {
     }
     try {
       const token = sessionStorage.getItem("bearer");
-      const response = await Api("GET", route, null, "", token, { 'API-Key': 'Miam0Tacos!' });
+      const response = await Api("GET", route, null, "", token);
       let data = response && response.body && response.body.data ? response.body.data : [];
       
       if (entity === "cars") {
@@ -306,6 +308,9 @@ function Dashboard() {
       console.error("Erreur:", err);
     }
   };
+
+  // Page réservée aux admins (l'API le vérifie aussi, ici on évite d'afficher des formulaires inutilisables)
+  if (!isAdmin) return <Navigate to="/discover" />;
 
   return (
     <>

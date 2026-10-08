@@ -19,7 +19,7 @@ function Discover() {
 			try {
 				setLoading(true);
 
-				const carsResponse = await Api("GET", "cars/all", null, "", access_token, {'API-Key': 'Miam0Tacos!'});
+				const carsResponse = await Api("GET", "cars/all", null, "", access_token);
 				if (carsResponse && carsResponse.status === 200 && carsResponse.body && carsResponse.body.data) {
 					setCars(carsResponse.body.data);
 					console.log("Cars data:", carsResponse.body.data);
@@ -57,7 +57,7 @@ function Discover() {
 		};
 
 		fetchData();
-	}, []);
+	}, [access_token]);
 
 	const handleCardClick = (car) => {
 		setSelectedCar(car);
