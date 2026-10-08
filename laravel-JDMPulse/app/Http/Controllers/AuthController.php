@@ -42,17 +42,14 @@ class AuthController extends Controller
     {
         $validated = $request->validated();
 
-        Log::info('Validated data:', $validated);
-
-        $role = isset($validated['role']) && !empty($validated['role']) ? $validated['role'] : 'user';
-
         try {
             $user = User::create([
                 'first_name' => $validated['first_name'],
                 'last_name' => $validated['last_name'],
                 'date_of_birth' => $validated['date_of_birth'],
                 'email' => $validated['email'],
-                'role' => $role,
+                // Toujours 'user' : un rôle admin ne s'attribue que depuis le dashboard
+                'role' => 'user',
                 'password' => Hash::make($validated['password']),
             ]);
 
