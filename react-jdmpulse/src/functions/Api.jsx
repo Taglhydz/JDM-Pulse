@@ -80,7 +80,6 @@ async function Api(method, route, body, params, token, headers = {}) {
 // fonction générique pour gérer les CRUD
 Api.entityOperation = async function(entityType, operation, data, id = null) {
     const token = sessionStorage.getItem("bearer");
-    const headers = { 'API-Key': 'Miam0Tacos!' };
     
     try {
         let route, method;
@@ -110,7 +109,7 @@ Api.entityOperation = async function(entityType, operation, data, id = null) {
                 throw new Error(`Opération ${operation} non supportée`);
         }
         
-        const response = await Api(method, route, data, "", token, headers);
+        const response = await Api(method, route, data, "", token);
         return response;
     } catch (error) {
         console.error(`Erreur lors de l'opération ${operation} sur ${entityType}:`, error);

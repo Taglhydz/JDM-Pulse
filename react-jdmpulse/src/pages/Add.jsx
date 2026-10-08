@@ -17,7 +17,7 @@ function Add() {
   const userId = userData ? JSON.parse(userData).id : null;
 
   useEffect(() => {
-    Api("GET", "cars/all", null, "", access_token, { 'API-Key': 'Miam0Tacos!' })
+    Api("GET", "cars/all", null, "", access_token)
       .then(response => {
         if (response && response.status === 200 && response.body && response.body.data) {
           setCars(response.body.data);
@@ -43,7 +43,7 @@ function Add() {
 
   useEffect(() => {
     if (userId) {
-      Api("GET", `cars/user/${userId}`, null, "", access_token, { 'API-Key': 'Miam0Tacos!' })
+      Api("GET", `cars/user/${userId}`, null, "", access_token)
         .then(response => {
           if (response && response.body && response.body.data) {
             const ids = response.body.data.map(own => own.car_id || own.id);
@@ -58,7 +58,7 @@ function Add() {
     e.stopPropagation();
     if (isAdding) return;
     setIsAdding(true);
-    Api("POST", "owns/create", { user_id: userId, car_id: carId }, "", access_token, { 'API-Key': 'Miam0Tacos!' })
+    Api("POST", "owns/create", { user_id: userId, car_id: carId }, "", access_token)
       .then(response => {
         if (response && response.body && response.body.success) {
           alert("Voiture ajoutée à votre collection !");
