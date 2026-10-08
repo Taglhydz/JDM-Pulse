@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Api    from "../functions/Api";
 import CarDetailModal from "../components/CarDetailModal";
+import CarImage from "../components/CarImage";
 import "../styles/Add.css";
 
 function Add() {
@@ -109,7 +110,7 @@ function Add() {
                 >
                   {ownedCarIds.includes(car.id) ? '✓' : '+'}
                 </button>
-                <img src={car.image_url} alt={`${car.brand} ${car.model}`} style={{width:'100%',maxWidth:'300px',borderRadius:'8px'}} />
+                <CarImage src={car.image_url} alt={`${car.brand} ${car.model}`} style={{width:'100%',maxWidth:'300px',borderRadius:'8px'}} />
                 <h2>{car.brand} {car.model}</h2>
                 <p>Année : {car.year}</p>
                 <p>Génération : {car.generation}</p>

@@ -35,12 +35,18 @@ class DatabaseSeeder extends Seeder
         DB::table('users')->truncate();
         Schema::enableForeignKeyConstraints();
 
+        // Le dépôt est public : en production, aucun mot de passe connu. Les comptes fictifs ont un
+        // mot de passe aléatoire et le superAdmin celui défini par ADMIN_PASSWORD dans le .env du serveur
+        $production    = app()->environment('production');
+        $password      = fn () => bcrypt($production ? Str::random(32) : 'password');
+        $adminPassword = bcrypt($production ? (config('app.admin_password') ?: Str::random(32)) : 'password');
+
         // Créer des utilisateurs
-        User::factory()->create(['first_name' => 'Tom',   'last_name' => 'Vaillant', 'date_of_birth' => '2004-11-11', 'email' => 'tom.vaillant@eg.com',  'role' => 'superAdmin', 'password' => bcrypt('password')]);
-        User::factory()->create(['first_name' => 'John',  'last_name' => 'Doe',      'date_of_birth' => '2000-05-01', 'email' => 'john.doe@eg.com',      'role' => 'admin',      'password' => bcrypt('password')]);
-        User::factory()->create(['first_name' => 'Jane',  'last_name' => 'Smith',    'date_of_birth' => '1994-02-21', 'email' => 'jane.smith@eg.com',    'role' => 'user',       'password' => bcrypt('password')]);
-        User::factory()->create(['first_name' => 'Alice', 'last_name' => 'Liddell',  'date_of_birth' => '2002-08-05', 'email' => 'alice.liddell@eg.com', 'role' => 'user',       'password' => bcrypt('password')]);
-        User::factory()->create(['first_name' => 'Bob',   'last_name' => 'Builder',  'date_of_birth' => '2001-10-17', 'email' => 'bob.builder@eg.com',   'role' => 'user',       'password' => bcrypt('password')]);
+        User::factory()->create(['first_name' => 'Tom',   'last_name' => 'Vaillant', 'date_of_birth' => '2004-11-11', 'email' => 'tom.vaillant@eg.com',  'role' => 'superAdmin', 'password' => $adminPassword]);
+        User::factory()->create(['first_name' => 'John',  'last_name' => 'Doe',      'date_of_birth' => '2000-05-01', 'email' => 'john.doe@eg.com',      'role' => 'admin',      'password' => $password()]);
+        User::factory()->create(['first_name' => 'Jane',  'last_name' => 'Smith',    'date_of_birth' => '1994-02-21', 'email' => 'jane.smith@eg.com',    'role' => 'user',       'password' => $password()]);
+        User::factory()->create(['first_name' => 'Alice', 'last_name' => 'Liddell',  'date_of_birth' => '2002-08-05', 'email' => 'alice.liddell@eg.com', 'role' => 'user',       'password' => $password()]);
+        User::factory()->create(['first_name' => 'Bob',   'last_name' => 'Builder',  'date_of_birth' => '2001-10-17', 'email' => 'bob.builder@eg.com',   'role' => 'user',       'password' => $password()]);
         // Compte démo (id 6) : connexion uniquement via /auth/demo, mot de passe aléatoire inconnu
         User::factory()->create(['first_name' => 'Visiteur', 'last_name' => 'Démo', 'date_of_birth' => '2000-01-01', 'email' => config('app.demo_email'), 'role' => 'user', 'password' => bcrypt(Str::random(32))]);
 
@@ -55,7 +61,7 @@ class DatabaseSeeder extends Seeder
         Car::factory()->create(['brand' => 'Honda',  'model' => 'Civic',   'year' => '1999', 'color' => 'Noir',        'generation' => 'EK9',   'image_url' => 'https://classicregister.com/sites/default/files/1997%20Honda%20Civic%20Type%20R%20EK9%20Images%202020%20NZ%20%282%29.jpg', 'edition_id' => 2]);
         Car::factory()->create(['brand' => 'Mazda',  'model' => 'RX-7',    'year' => '1997', 'color' => 'Blanc',       'generation' => 'FD3S',  'image_url' => 'https://images.squarespace-cdn.com/content/v1/556bcfd7e4b0923c3c70d86c/1527750744747-559WQIWSO7GZTCYQ69XO/IMG_1268+copy+copy.jpg', 'edition_id' => 3]);
         Car::factory()->create(['brand' => 'Nissan', 'model' => 'Skyline', 'year' => '2000', 'color' => 'Bleu',        'generation' => 'R34',   'image_url' => 'https://img1.bonhams.com/image?src=Images/live/2023-03/27/25327802-1-1.jpg', 'edition_id' => 4]);
-        Car::factory()->create(['brand' => 'Toyota', 'model' => 'Supra',   'year' => '1998', 'color' => 'Rouge',       'generation' => 'Mk4',   'image_url' => 'https://carjager-dev.mo.cloudinary.net/https://wp.carjager.com/wp-content/uploads/2023/03/Toyota-Supra-EU-02.jpeg?tx=w_1905', 'edition_id' => null]);
+        Car::factory()->create(['brand' => 'Toyota', 'model' => 'Supra',   'year' => '1998', 'color' => 'Rouge',       'generation' => 'Mk4',   'image_url' => 'https://www.swapland.fr/img/cms/Photo%20blog/toyota-supra-turbo-1993.jpg', 'edition_id' => null]);
 
         // Créer des moteurs
         Engine::factory()->create(['engine_name' => 'DOHC 16V', 'architecture' => 'I4',     'volume' => '1.6L', 'induction' => 'Atmospherique', 'fuel_type' => 'Essence']);
