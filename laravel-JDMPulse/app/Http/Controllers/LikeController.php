@@ -11,19 +11,21 @@ use App\Http\Librairies\ApiResponse;
 
 class LikeController extends Controller
 {
-	public function like(Request $request)
+	// L'utilisateur vient du token et la voiture de l'URL : on ne fait pas confiance au body
+	public function like(Request $request, $carId)
 	{
-		$like = Like::where('user_id', $request->user_id)->where('car_id', $request->car_id)->first();
+		$userId = $request->user()->id;
+		$like = Like::where('user_id', $userId)->where('car_id', $carId)->first();
 		if ($like) {
 			return ApiResponse::error('Déjà aimé');
 		}
-		$like = Like::create($request->all());
+		$like = Like::create(['user_id' => $userId, 'car_id' => $carId]);
 		return ApiResponse::created('Like créé', new LikeResource($like));
 	}
 
-	public function unlike(Request $request)
+	public function unlike(Request $request, $carId)
 	{
-		$like = Like::where('user_id', $request->user_id)->where('car_id', $request->car_id)->first();
+		$like = Like::where('user_id', $request->user()->id)->where('car_id', $carId)->first();
 		if (!$like) {
 			return ApiResponse::error('Pas aimé');
 		}

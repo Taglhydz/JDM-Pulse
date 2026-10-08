@@ -36,8 +36,13 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request, string $id)
     {
+        // Un utilisateur ne peut consulter que son propre profil, sauf les admins
+        if ($request->user()->id != $id && !$request->user()->isAdmin()) {
+            return ApiResponse::forbidden('Vous ne pouvez consulter que votre propre profil');
+        }
+
         $user = User::find($id);
         if (!$user) {
             return ApiResponse::notFound('Utilisateur non trouvé');

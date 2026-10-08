@@ -49,4 +49,12 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Indique si l'utilisateur a accès au dashboard (admin ou superAdmin).
+     */
+    public function isAdmin(): bool
+    {
+        return in_array($this->role, ['admin', 'superAdmin']);
+    }
 }

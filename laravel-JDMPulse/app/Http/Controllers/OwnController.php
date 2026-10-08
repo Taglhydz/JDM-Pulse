@@ -36,6 +36,11 @@ class OwnController extends Controller
      */
     public function store(OwnRequest $request)
     {
+        // Un utilisateur ne peut ajouter une voiture qu'à sa propre collection, sauf les admins
+        if ($request->user()->id != $request->user_id && !$request->user()->isAdmin()) {
+            return ApiResponse::forbidden('Vous ne pouvez modifier que votre propre collection');
+        }
+
         try {
             $own = Own::create($request->all());
             return ApiResponse::created('Possession créée', new OwnResource($own));
@@ -91,8 +96,12 @@ class OwnController extends Controller
      * @param  string  $carId
      * @return \Illuminate\Http\Response
      */
-    public function destroy(string $userId, string $carId)
+    public function destroy(Request $request, string $userId, string $carId)
     {
+        if ($request->user()->id != $userId && !$request->user()->isAdmin()) {
+            return ApiResponse::forbidden('Vous ne pouvez modifier que votre propre collection');
+        }
+
         $own = Own::where('user_id', $userId)->where('car_id', $carId)->first();
         if (!$own) {
             return ApiResponse::notFound('Possession non trouvée');
