@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use App\Http\Resources\LoginResource;
 use App\Http\Resources\RegisterResource;
+use App\Http\Resources\UserResource;
 use App\Http\Librairies\ApiResponse;
 
 class AuthController extends Controller
@@ -36,6 +37,12 @@ class AuthController extends Controller
         $request->user()->currentAccessToken()->delete();
 
         return ApiResponse::success('Token supprimé');
+    }
+
+    // Renvoie l'utilisateur correspondant au token
+    public function user(Request $request)
+    {
+        return ApiResponse::success('Utilisateur connecté', new UserResource($request->user()));
     }
 
     public function register(RegisterRequest $request)

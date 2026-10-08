@@ -17,7 +17,6 @@ Route::middleware('throttle:60,1')->group(function () {
     Route::prefix('auth')->group(function () {
         Route::post('/login'		  , [AuthController::class, 'login'			]);
         Route::post('/register'		  , [AuthController::class, 'register'		]);
-        Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
     });
 
     // Routes protégées par Sanctum
