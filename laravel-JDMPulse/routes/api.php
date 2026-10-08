@@ -15,7 +15,7 @@ use App\Http\Controllers\LikeController;
 use App\Http\Middleware\CheckApiKey;
 use App\Http\Middleware\CheckRole;
 
-Route::middleware('throttle:60,0.1')->group(function () {
+Route::middleware('throttle:60,1')->group(function () {
     // Routes d'authentification
     Route::prefix('auth')->group(function () {
         Route::post('/login'		  , [AuthController::class, 'login'			]);
