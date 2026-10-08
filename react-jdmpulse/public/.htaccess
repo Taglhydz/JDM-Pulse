@@ -1,0 +1,15 @@
+# Routage SPA : Apache renvoie index.html pour toute URL qui n'est pas un vrai fichier,
+# React Router se charge ensuite d'afficher la bonne page (/discover, /profile...)
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # On laisse passer les appels à l'API si elle est servie sur le même domaine
+  RewriteCond %{REQUEST_URI} !^/api/
+
+  # On laisse passer les fichiers et dossiers qui existent (js, css, images...)
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+
+  RewriteRule ^ index.html [L]
+</IfModule>
