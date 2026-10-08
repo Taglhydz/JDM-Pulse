@@ -1,5 +1,7 @@
+// URL de l'API définie dans .env (REACT_APP_API_URL), localhost par défaut en dev
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
+
 async function Api(method, route, body, params, token, headers = {}) {
-    const port = "8000"
 
     let head = {
         "Accept": "application/json",
@@ -13,7 +15,7 @@ async function Api(method, route, body, params, token, headers = {}) {
 
     if (method === "POST") {
         try {
-            const response = await fetch(`http://127.0.0.1:${port}/api/${route}${params}`, {
+            const response = await fetch(`${API_URL}/api/${route}${params}`, {
                 method: "POST",
                 body: JSON.stringify(body),
                 headers: head
@@ -38,7 +40,7 @@ async function Api(method, route, body, params, token, headers = {}) {
     }
     if (method === "GET") {
         try {
-            const response = await fetch(`http://localhost:${port}/api/${route}${params}`, {
+            const response = await fetch(`${API_URL}/api/${route}${params}`, {
                 method: "GET",
                 headers: head,
             });
@@ -58,7 +60,7 @@ async function Api(method, route, body, params, token, headers = {}) {
     }
     if (method === "DELETE") {
         try {
-            const response = await fetch(`http://localhost:${port}/api/${route}${params}`, {
+            const response = await fetch(`${API_URL}/api/${route}${params}`, {
                 method: "DELETE",
                 headers: head,
             });
