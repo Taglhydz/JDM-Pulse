@@ -10,11 +10,6 @@ function Connection() {
 	const [demoLoading, setDemoLoading] = useState(false);
 	const [error, setError] = useState("");
 
-	// visite sans compte : catalogue en lecture seule
-	const goDiscover = () => {
-		navigate("/discover");
-	}
-
 	const goDemo = async () => {
 		setError("");
 		setDemoLoading(true);
@@ -48,7 +43,6 @@ function Connection() {
 					<div className="connection-separator"><span>or</span></div>
 					{error && <div className="error-message">{error}</div>}
 					<div className="guest-options">
-						<button onClick={goDiscover}>Explore as a guest</button>
 						<button onClick={goDemo} disabled={demoLoading}>
 							{demoLoading ? "Connecting..." : "Try the demo account"}
 						</button>

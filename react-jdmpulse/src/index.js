@@ -16,7 +16,8 @@ import RequireAuth from './components/RequireAuth';
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Navigate to="/connection" />,
+    // accueil sur le catalogue : visible sans compte, avec accès au compte démo
+    element: <Navigate to="/discover" />,
   },
   {
     path: '/connection',
