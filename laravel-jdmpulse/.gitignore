@@ -21,3 +21,14 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
+
+# Build React copié dans public/ au déploiement (voir DEPLOIEMENT.md)
+/public/index.html
+/public/static
+/public/asset-manifest.json
+/public/manifest.json
+/public/favicon.ico
+/public/robots.txt
+/public/logo192.png
+/public/logo512.png
+/public/placeholder-car.svg
