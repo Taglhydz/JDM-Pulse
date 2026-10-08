@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="Image indisponible">
+  <rect width="400" height="300" fill="#e0eef0"/>
+  <!-- silhouette de voiture -->
+  <g fill="#4fb3bf">
+    <path d="M70 185 L95 140 Q102 128 116 126 L250 120 Q268 119 280 130 L318 160 L338 165 Q352 169 352 183 L352 195 Q352 202 345 202 L62 202 Q55 202 55 195 L55 196 Q55 187 70 185 Z"/>
+    <circle cx="125" cy="203" r="24" fill="#2c3e50"/>
+    <circle cx="125" cy="203" r="10" fill="#e0eef0"/>
+    <circle cx="290" cy="203" r="24" fill="#2c3e50"/>
+    <circle cx="290" cy="203" r="10" fill="#e0eef0"/>
+  </g>
+  <path d="M118 140 L130 132 L192 129 L192 158 L106 160 Z M205 129 L248 127 Q260 127 268 134 L288 156 L205 158 Z" fill="#e0eef0" opacity="0.8"/>
+  <text x="200" y="262" text-anchor="middle" font-family="Poppins, Arial, sans-serif" font-size="18" fill="#2c3e50">Image indisponible</text>
+</svg>

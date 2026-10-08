@@ -11,11 +11,13 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Add from './pages/Add';
 import Liked from './pages/Liked';
+import RequireAuth from './components/RequireAuth';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Navigate to="/connection" />,
+    // accueil sur le catalogue : visible sans compte, avec accès au compte démo
+    element: <Navigate to="/discover" />,
   },
   {
     path: '/connection',
@@ -31,7 +33,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/profile',
-    element: <Profile/>,
+    element: <RequireAuth><Profile/></RequireAuth>,
   },
   {
     path: '/discover',
@@ -39,15 +41,15 @@ const router = createBrowserRouter([
   },
   {
     path: '/dashboard',
-    element: <Dashboard/>,
+    element: <RequireAuth><Dashboard/></RequireAuth>,
   },
   {
     path: '/add',
-    element: <Add/>,
+    element: <RequireAuth><Add/></RequireAuth>,
   },
   {
     path: '/liked',
-    element: <Liked/>,
+    element: <RequireAuth><Liked/></RequireAuth>,
   },
 ]);
 

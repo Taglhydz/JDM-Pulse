@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Api from "../functions/Api";
+import CarImage from "./CarImage";
 import "../styles/CarDetailModal.css";
 
 function CarDetailModal({ car, onClose }) {
@@ -42,7 +43,7 @@ function CarDetailModal({ car, onClose }) {
           <div style={{marginTop: 80}}>Chargement...</div>
         ) : (
           <React.Fragment>
-            <img src={details.car.image_url || car.image_url} alt={`${details.car.brand} ${details.car.model}`} />
+            <CarImage src={details.car.image_url || car.image_url} alt={`${details.car.brand} ${details.car.model}`} />
             <hr className="car-modal-separator" />
             <h2>{details.car.brand} {details.car.model}</h2>
             <p><strong>Année :</strong> {details.car.year}</p>

@@ -3,6 +3,7 @@ import CarDetailModal from "../components/CarDetailModal";
 import Header         from "../components/Header";
 import Footer         from "../components/Footer";
 import Api            from "../functions/Api";
+import CarImage       from "../components/CarImage";
 import "../styles/Liked.css";
 import "../styles/HeartButton.css";
 
@@ -126,8 +127,8 @@ function Liked() {
                 >
                   <span className="heart-icon">❤️</span>
                 </button>
-                <img 
-                  src={car.image_url || "/placeholder-car.jpg"} 
+                <CarImage 
+                  src={car.image_url} 
                   alt={`${car.brand} ${car.model}`} 
                   style={{width:'100%', maxWidth:'300px', borderRadius:'8px'}} 
                 />

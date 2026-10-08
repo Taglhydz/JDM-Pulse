@@ -1,5 +1,6 @@
-// URL de l'API définie dans .env (REACT_APP_API_URL), localhost par défaut en dev
-const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
+// URL de l'API définie dans .env (REACT_APP_API_URL), localhost par défaut en dev.
+// En production elle est vide : appels relatifs (/api/...) sur le même domaine que le front
+const API_URL = process.env.REACT_APP_API_URL ?? "http://localhost:8000";
 
 async function Api(method, route, body, params, token, headers = {}) {
 

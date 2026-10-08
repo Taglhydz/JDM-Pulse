@@ -15,6 +15,12 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    // Compte utilisé par le bouton "Essayer le compte démo" (créé par le seeder)
+    'demo_email' => env('DEMO_EMAIL', 'demo@eg.com'),
+
+    // Mot de passe du superAdmin créé par le seeder en production (vide = aléatoire)
+    'admin_password' => env('ADMIN_PASSWORD'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment
