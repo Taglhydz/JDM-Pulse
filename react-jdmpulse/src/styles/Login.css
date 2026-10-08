@@ -103,17 +103,3 @@
   cursor: not-allowed;
   transform: none;
 }
-
-.forgot-password {
-  text-align: right;
-  font-size: 0.9rem;
-  margin-top: 0.5rem;
-}
-
-.forgot-password a {
-  color: var(--primary);
-}
-
-.forgot-password a:hover {
-  text-decoration: underline;
-}

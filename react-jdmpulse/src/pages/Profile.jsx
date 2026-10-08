@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import CarDetailModal from "../components/CarDetailModal";
 import Header         from "../components/Header";
 import Footer         from "../components/Footer";
@@ -15,18 +15,19 @@ function Profile() {
   const userData     = sessionStorage.getItem("user"  );
   const userId = userData ? JSON.parse(userData).id : null;
 
-  const fetchUserCars = () => {
-    Api("GET", `cars/user/${userId}`, null, "", access_token, { "API-Key": "Miam0Tacos!" })
+  // useCallback pour garder la même fonction entre les rendus (sinon le useEffect boucle)
+  const fetchUserCars = useCallback(() => {
+    Api("GET", `cars/user/${userId}`, null, "", access_token)
       .then(carResponse => {
         if (carResponse && carResponse.status === 200 && carResponse.body && carResponse.body.data) {
           setCars(carResponse.body.data);
         }
       })
       .catch(error => console.error(error));
-  };
+  }, [userId, access_token]);
 
   useEffect(() => {
-    Api("GET", "users/" + userId, null, "", access_token, { "API-Key": "Miam0Tacos!" })
+    Api("GET", "users/" + userId, null, "", access_token)
       .then(response => {
         if (response && response.status === 200 && response.body && response.body.data) {
           setUser(response.body.data);
@@ -34,7 +35,7 @@ function Profile() {
         }
       })
       .catch(error => console.error(error));
-  }, []);
+  }, [userId, access_token, fetchUserCars]);
 
   if (!user) return <div>Chargement...</div>;
 
@@ -52,7 +53,7 @@ function Profile() {
     if (window.confirm("Êtes-vous sûr de vouloir supprimer cette voiture de votre collection ?")) {
       setIsDeleting(true);
       
-      Api("DELETE", `owns/delete/${userId}/${carId}`, null, "", access_token, { "API-Key": "Miam0Tacos!" })
+      Api("DELETE", `owns/delete/${userId}/${carId}`, null, "", access_token)
         .then(response => {
           if (response && response.body && response.body.success) {
             alert("Voiture supprimée de votre collection !");

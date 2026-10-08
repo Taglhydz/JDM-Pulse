@@ -10,7 +10,7 @@ function CarDetailModal({ car, onClose }) {
   useEffect(() => {
     if (car) {
       setLoading(true);
-      Api("GET", `cars/detail/${car.id}`, null, "", access_token, { 'API-Key': 'Miam0Tacos!' })
+      Api("GET", `cars/detail/${car.id}`, null, "", access_token)
         .then(response => {
           console.log('Réponse API car details:', response);
           if (response && response.status === 200 && response.body && response.body.data) {
@@ -26,7 +26,7 @@ function CarDetailModal({ car, onClose }) {
     } else {
       setDetails(null);
     }
-  }, [car]);
+  }, [car, access_token]);
 
   useEffect(() => {
     console.log('Valeur de details dans le modal:', details);

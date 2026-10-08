@@ -41,6 +41,10 @@ function Login() {
 				navigate("/discover");
 			} else if (response && response.body && response.body.message) {
 				setError(response.body.message);
+			} else if (response && response.message) {
+				// pas de body : serveur éteint, injoignable ou réponse non JSON
+				setError("Impossible de joindre le serveur, réessaie dans quelques instants.");
+				console.error("Erreur réseau :", response.message);
 			} else {
 				setError("Structure de réponse inattendue");
 				console.error("Réponse complète:", response.body);
@@ -94,9 +98,6 @@ function Login() {
 									onChange={handleChange}
 									required
 								/>
-							</div>
-							<div className="forgot-password">
-								<a href="#">Forgot password?</a>
 							</div>
 							<div className="login-actions">
 								<button type="submit" disabled={loading}>
