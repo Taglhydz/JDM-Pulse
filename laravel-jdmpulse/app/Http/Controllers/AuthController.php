@@ -32,6 +32,22 @@ class AuthController extends Controller
         return ApiResponse::success('Connexion réussie', new LoginResource($user));
     }
 
+    // Connexion en un clic au compte de démonstration, pour visiter le site sans s'inscrire
+    public function demo()
+    {
+        $user = User::where('email', config('app.demo_email'))->first();
+
+        // Jamais de démo sur un compte admin : tout le monde y aurait accès
+        if (!$user || $user->isAdmin()) {
+            return ApiResponse::notFound('Compte démo indisponible');
+        }
+
+        // Token limité dans le temps pour ne pas accumuler des accès permanents
+        $user->access_token = $user->createToken('demo_token', ['*'], now()->addHours(2))->plainTextToken;
+
+        return ApiResponse::success('Connexion au compte démo réussie', new LoginResource($user));
+    }
+
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();

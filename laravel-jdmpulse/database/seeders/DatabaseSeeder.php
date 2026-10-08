@@ -13,6 +13,7 @@ use App\Models\Like;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -40,6 +41,8 @@ class DatabaseSeeder extends Seeder
         User::factory()->create(['first_name' => 'Jane',  'last_name' => 'Smith',    'date_of_birth' => '1994-02-21', 'email' => 'jane.smith@eg.com',    'role' => 'user',       'password' => bcrypt('password')]);
         User::factory()->create(['first_name' => 'Alice', 'last_name' => 'Liddell',  'date_of_birth' => '2002-08-05', 'email' => 'alice.liddell@eg.com', 'role' => 'user',       'password' => bcrypt('password')]);
         User::factory()->create(['first_name' => 'Bob',   'last_name' => 'Builder',  'date_of_birth' => '2001-10-17', 'email' => 'bob.builder@eg.com',   'role' => 'user',       'password' => bcrypt('password')]);
+        // Compte démo (id 6) : connexion uniquement via /auth/demo, mot de passe aléatoire inconnu
+        User::factory()->create(['first_name' => 'Visiteur', 'last_name' => 'Démo', 'date_of_birth' => '2000-01-01', 'email' => config('app.demo_email'), 'role' => 'user', 'password' => bcrypt(Str::random(32))]);
 
         // Créer des éditions
         Edition::factory()->create(['edition_name' => 'Silver Blue' ]);
@@ -86,6 +89,7 @@ class DatabaseSeeder extends Seeder
         Own::factory()->create(['car_id' => 3, 'user_id' => 3]);
         Own::factory()->create(['car_id' => 4, 'user_id' => 4]);
         Own::factory()->create(['car_id' => 5, 'user_id' => 5]);
+        Own::factory()->create(['car_id' => 4, 'user_id' => 6]);
 
         // Créer des likes
         Like::factory()->create(['car_id' => 1, 'user_id' => 1]);
@@ -96,6 +100,8 @@ class DatabaseSeeder extends Seeder
         Like::factory()->create(['car_id' => 3, 'user_id' => 3]);
         Like::factory()->create(['car_id' => 4, 'user_id' => 4]);
         Like::factory()->create(['car_id' => 5, 'user_id' => 5]);
+        Like::factory()->create(['car_id' => 1, 'user_id' => 6]);
+        Like::factory()->create(['car_id' => 5, 'user_id' => 6]);
 
     }
 }

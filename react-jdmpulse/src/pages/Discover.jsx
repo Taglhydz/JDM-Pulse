@@ -1,18 +1,24 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Api 	  from "../functions/Api";
 import CarDetailModal from "../components/CarDetailModal";
+import { getUser, loginDemo } from "../functions/Session";
 import "../styles/Discover.css";
 import "../styles/HeartButton.css";
 
 function Discover() {
+	const navigate = useNavigate();
 	const [cars, 		setCars		  ] = useState([]);
 	const [selectedCar, setSelectedCar] = useState(null);
 	const [userLikes, 	setUserLikes  ] = useState([]);
 	const [likesCount, 	setLikesCount ] = useState({});
 	const [loading, 	setLoading	  ] = useState(true);
+	const [guestNotice,  setGuestNotice ] = useState(false);
 	const access_token = sessionStorage.getItem("bearer");
+	// null si le visiteur n'est pas connecté : lecture seule
+	const user = getUser();
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -25,9 +31,12 @@ function Discover() {
 					console.log("Cars data:", carsResponse.body.data);
 				}
 
-				const userId = JSON.parse(sessionStorage.getItem("user")).id;
-				const userLikesResponse = await Api("GET", `likes-by-cars-user/${userId}`, null, "", true);
-				if (userLikesResponse.status === 200 && userLikesResponse.body.success) {
+				// les likes de l'user uniquement s'il est connecté
+				const currentUser = getUser();
+				const userLikesResponse = currentUser
+					? await Api("GET", `likes-by-cars-user/${currentUser.id}`, null, "", true)
+					: null;
+				if (userLikesResponse && userLikesResponse.status === 200 && userLikesResponse.body.success) {
 					const likes = userLikesResponse.body.data;
 					// tableau id des voitures likées par l'user
 					const likedCarIds = likes.map(like => like.car_id);
@@ -68,8 +77,13 @@ function Discover() {
 	};
 	const handleLike = async (carId, event) => {
 		event.stopPropagation();
+		// un visiteur ne peut pas liker : on met en avant le bandeau de connexion
+		if (!user) {
+			setGuestNotice(true);
+			return;
+		}
 		try {
-			const userId = JSON.parse(sessionStorage.getItem("user")).id;
+			const userId = user.id;
 			
 			if (userLikes.includes(carId)) {
 				setUserLikes(prevLikes => prevLikes.filter(id => id !== carId));
@@ -112,11 +126,31 @@ function Discover() {
 		}
 	};
 
+	// connexion au compte démo depuis le bandeau, le re-render recharge les likes de l'user
+	const handleDemo = async () => {
+		if (await loginDemo()) {
+			setGuestNotice(false);
+		}
+	};
+
 	return (
 		<>
 			<Header />
 			<div className="discover-page">
 				<h1>Découvrir des JDM</h1>
+				{!user && (
+					<div className={`guest-banner ${guestNotice ? "guest-banner-highlight" : ""}`}>
+						<p>
+							{guestNotice
+								? "Connecte-toi pour liker des voitures et créer ta collection."
+								: "Tu explores JDM Pulse en visiteur."}
+						</p>
+						<div className="guest-banner-actions">
+							<button onClick={handleDemo}>Essayer le compte démo</button>
+							<button className="guest-banner-secondary" onClick={() => navigate("/connection")}>Se connecter</button>
+						</div>
+					</div>
+				)}
 				{loading ? (
 					<div className="loading">Chargement...</div>
 				) : (
