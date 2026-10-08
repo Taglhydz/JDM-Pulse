@@ -1,6 +1,7 @@
 <?php
 
 return [
+
     /*
     |--------------------------------------------------------------------------
     | Default Mailer
@@ -35,12 +36,6 @@ return [
     */
 
     'mailers' => [
-        // mailtrap transport
-        'mailtrap-sdk' => [
-            'transport' => 'mailtrap-sdk',
-            'host' => env('MAILTRAP_HOST', 'send.api.mailtrap.io'),
-            'api_key' => env('MAILTRAP_API_KEY'),
-        ],
 
         'smtp' => [
             'transport' => 'smtp',
@@ -99,6 +94,7 @@ return [
                 'postmark',
             ],
         ],
+
     ],
 
     /*
@@ -116,4 +112,5 @@ return [
         'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
         'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
+
 ];
