@@ -20,12 +20,6 @@ Route::middleware('throttle:60,1')->group(function () {
         Route::post('/demo'			  , [AuthController::class, 'demo'			]);
     });
 
-    // Routes publiques : un visiteur peut parcourir le catalogue sans compte
-    Route::get('/cars/all'        , [CarController::class , 'index'            ]);
-    Route::get('/cars/{id}'       , [CarController::class , 'show'             ]);
-    Route::get('/cars/detail/{id}', [CarController::class , 'getDetailsByCarId']);
-    Route::get('/likes-by-car'    , [LikeController::class, 'getLikesByCar'    ]);
-
     // Routes protégées par Sanctum
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('/logout', [AuthController::class, 'logout']);
@@ -41,8 +35,11 @@ Route::middleware('throttle:60,1')->group(function () {
             Route::post	 ('/update-pwd/{id}', [UserController::class, 'updatePassword'])->middleware('check.role:superAdmin');
         });
 
-        // Routes pour Car : lecture publique (plus haut), écriture réservée aux admins
+        // Routes pour Car : lecture pour tous, écriture réservée aux admins
         Route::prefix('cars')->group(function () {
+            Route::get	 ('/all'		, [CarController::class, 'index' 			 ]);
+            Route::get	 ('/{id}'		, [CarController::class, 'show'  			 ]);
+            Route::get	 ('/detail/{id}', [CarController::class, 'getDetailsByCarId' ]);
             Route::get	 ('/user/{id}'  , [OwnController::class, 'getCarsByUserId'	 ]);
 
             Route::middleware('check.role:admin,superAdmin')->group(function () {
@@ -67,6 +64,7 @@ Route::middleware('throttle:60,1')->group(function () {
         // Routes pour les like
         Route::post('/like/{carId}',               [LikeController::class, 'like'            ]);
         Route::post('/unlike/{carId}',             [LikeController::class, 'unlike'          ]);
+        Route::get('/likes-by-car',                [LikeController::class, 'getLikesByCar'   ]);
         Route::get('/likes-by-cars-user/{userId}', [LikeController::class, 'getLikesByUserId']);
 
         // Routes du dashboard : réservées aux admins
