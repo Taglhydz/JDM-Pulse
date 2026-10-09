@@ -89,54 +89,8 @@
   color: #ff3b5c;
 }
 
-/* Bandeau affiché aux visiteurs non connectés */
-.guest-banner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: var(--padding-md);
-  margin: 1rem 3rem;
-  padding: var(--padding-md);
-  background-color: rgba(0, 131, 143, 0.08);
-  border-left: 4px solid var(--primary);
-  border-radius: var(--border-radius);
-  transition: var(--transition);
-}
-
-.guest-banner p {
-  margin: 0;
-  color: var(--secondary);
-}
-
-.guest-banner-highlight {
-  background-color: rgba(0, 131, 143, 0.18);
-  box-shadow: var(--box-shadow);
-}
-
-.guest-banner-actions {
-  display: flex;
-  gap: var(--padding-sm);
-  flex-wrap: wrap;
-}
-
-.guest-banner-actions .guest-banner-secondary {
-  background-color: transparent;
-  color: var(--primary);
-  border: 1px solid var(--primary);
-}
-
-.guest-banner-actions .guest-banner-secondary:hover {
-  background-color: var(--primary);
-  color: var(--text-light);
-}
-
 @media (max-width: 768px) {
   .cars-list {
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  }
-
-  .guest-banner {
-    margin: 1rem;
   }
 }
