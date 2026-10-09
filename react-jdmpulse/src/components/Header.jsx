@@ -30,11 +30,9 @@ function Header() {
 					<button className="dashboard-btn" onClick={() => navigate('/dashboard')}>Dashboard</button>
 				)}
 				<ul id='nav'>
-					{user && (
-						<li>
-							<Link to="/Profile">Profile</Link>
-						</li>
-					)}
+					<li>
+						<Link to="/Profile">Profile</Link>
+					</li>
 
 					<li>
 						<Link to="/Discover">Discover</Link>
@@ -43,22 +41,14 @@ function Header() {
 					<li>
 						<h1>JDM - Pulse</h1>
 					</li>
-					{user && (
-						<>
-							<li>
-								<Link to="/Liked">Liked</Link>
-							</li>
-							<li>
-								<Link to="/Add">Add</Link>
-							</li>
-						</>
-					)}
+					<li>
+						<Link to="/Liked">Liked</Link>
+					</li>
+					<li>
+						<Link to="/Add">Add</Link>
+					</li>
 				</ul>
-				{user ? (
-					<button className="logout-btn" onClick={handleLogout}>Logout</button>
-				) : (
-					<button className="logout-btn" onClick={() => navigate("/connection")}>Sign in</button>
-				)}
+				<button className="logout-btn" onClick={handleLogout}>Logout</button>
 			</header>
 			<div className="header-divider"></div>
 		</>
