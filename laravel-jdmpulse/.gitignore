@@ -22,7 +22,7 @@ yarn-error.log
 /.vscode
 /.zed
 
-# Build React copié dans public/ au déploiement (voir DEPLOIEMENT.md)
+# Build React copié dans public/ au déploiement (scripts/deploy-front.ps1)
 /public/index.html
 /public/static
 /public/asset-manifest.json
